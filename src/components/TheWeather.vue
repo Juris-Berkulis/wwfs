@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
 import TheWeatherInfo from './TheWeatherInfo.vue';
+import { type OWMCurrentWeather } from '@/types';
 
-const weatherData = ref({});
+const weatherData: Ref<OWMCurrentWeather | null> = ref(null);
 const cityName: Ref<string> = ref('moscow');
 const units: string = 'metric';
 const language: string = 'ru';
 
-const getWeather = async () => {
+const getWeather = async (): Promise<void> => {
     try {
         const response: Response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName.value}&appid=${import.meta.env.VITE_API_KEY_FOR_OPENWEATHERMAP}&units=${units}&lang=${language}`);
 
@@ -26,7 +27,7 @@ getWeather();
 </script>
 
 <template>
-<TheWeatherInfo />
+<TheWeatherInfo :weatherData="weatherData" />
 </template>
 
 <style scoped lang="scss">

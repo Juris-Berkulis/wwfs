@@ -1,36 +1,68 @@
 <script setup lang="ts">
+import type { OWMCurrentWeather } from '@/types';
 import IconSettings from './IconSettings.vue';
 
+interface Props {
+    weatherData: OWMCurrentWeather | null,
+};
+
+defineProps<Props>();
+
+const getWindDirection = (degry: number | undefined): string => {
+    if (degry === undefined) return 'н/д'
+
+    if (degry >= 348.75 || degry < 11.25) return 'С'
+    else if (degry < 33.75) return 'ССВ'
+    else if (degry < 56.25) return 'СВ'
+    else if (degry < 78.75) return 'СВВ'
+    else if (degry < 101.25) return 'В'
+    else if (degry < 123.75) return 'ЮВВ'
+    else if (degry < 146.25) return 'ЮВ'
+    else if (degry < 168.75) return 'ЮЮВ'
+    else if (degry < 191.25) return 'Ю'
+    else if (degry < 213.75) return 'ЮЮЗ'
+    else if (degry < 236.25) return 'ЮЗ'
+    else if (degry < 258.25) return 'ЮЗЗ'
+    else if (degry < 281.25) return 'З'
+    else if (degry < 303.75) return 'СЗЗ'
+    else if (degry < 326.25) return 'СЗ'
+    else if (degry < 348.75) return 'ССЗ'
+    else return '???'
+};
+
+const getVisibility = (visibility: number): string => {
+    if (visibility >= 1000) return `${(visibility / 1000).toFixed(1)}км`
+    return `${visibility}м`
+}
 </script>
 
 <template>
 <div class="header">
-    <p class="cityName">Moscow, RU</p>
+    <p class="cityName">{{ weatherData?.name }}, {{ weatherData?.sys?.country }}</p>
     <IconSettings />
 </div>
 <div class="main">
-    <img class="weatherImg" src="" alt="">
-    <p class="weatherTemp">7*C</p>
+    <img class="weatherImg" :src="`https://openweathermap.org/img/w/${weatherData?.weather[0].icon}.png`" :alt="weatherData?.weather[0].description">
+    <p class="weatherTemp">{{ weatherData?.main?.temp?.toFixed(0) || 'н/д' }}&#176;C</p>
 </div>
 <div class="description">
-    <span>Feel like -3*C.</span>
-    <span>Broken clouds.</span>
-    <span>Light breeze</span>
+    <span>Ощущается: {{ (weatherData?.main?.feels_like || weatherData?.main?.temp)?.toFixed(0) || 'н/д' }}&#176;C.</span>
+    <span>{{ weatherData?.weather[0]?.description }}.</span>
 </div>
 <div class="additionally">
-    <p>
-        <span class="arrowIcon">!</span>
-        <span>3.0m/s SSE</span>
+    <p v-if="weatherData?.wind?.speed">
+        <span v-if="weatherData?.wind?.deg" class="arrowIcon" :style="{transform: `rotateZ(${weatherData?.wind?.deg}deg)`}">!</span>
+        <span>{{ weatherData?.wind?.speed.toFixed(1) }}м/с {{ getWindDirection(weatherData?.wind?.deg) }}</span>
     </p>
-    <p>
+    <p v-if="weatherData?.main?.pressure">
         <span class="preassureIcon">
             <span></span>
         </span>
-        <span>1021hPa</span>
+        <span>{{ weatherData?.main?.pressure }}гПа</span>
     </p>
-    <p>Humidity: 97%</p>
-    <p>Dew point: 0*C</p>
-    <p>Visibility: 10.0km</p>
+    <p v-if="weatherData?.main?.humidity">Влажность: {{ weatherData?.main?.humidity }}%</p>
+    <p v-if="weatherData?.clouds?.all">Облака: {{ weatherData?.clouds?.all }}%</p>
+    <p v-if="weatherData?.visibility">Видимость: {{ getVisibility(weatherData?.visibility) }}</p>
 </div>
 </template>
 
@@ -75,6 +107,7 @@ import IconSettings from './IconSettings.vue';
 
 .description span:last-child {
     margin-right: 0;
+    text-transform: capitalize;
 }
 
 .additionally {
