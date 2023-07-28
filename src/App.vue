@@ -6,5 +6,5 @@ import TheWeather from '@/components/TheWeather.vue';
 <TheWeather />
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 </style>
