@@ -6,7 +6,7 @@ import IconEnter from './IconEnter.vue';
 <form class="form" action="">
     <label class="label" for="cityInput">Добавить город</label>
     <div class="inputWrapper">
-        <input class="input" type="text" name="cityInput" placeholder="Город">
+        <input class="input" type="text" id="cityInput" placeholder="Город">
         <button class="enterBtn" type="submit">
             <IconEnter />
         </button>
