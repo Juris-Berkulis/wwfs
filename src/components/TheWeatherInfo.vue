@@ -3,7 +3,7 @@ import { computed, ref, type ComputedRef, type Ref } from 'vue';
 import IconSettings from './IconSettings.vue';
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
 import type { OWMCurrentWeather } from '@/types';
-import { setFirstLetterOfTheStringToCapital } from '@/helpers/index';
+import { setFirstLetterOfTheStringToCapital, getDateAndTime } from '@/helpers/index';
 
 interface Props {
     toggleIsShowSettings: () => void,
@@ -11,7 +11,7 @@ interface Props {
 
 defineProps<Props>();
 
-const openedCityId: Ref<number> = ref(0);
+const openedCityIndex: Ref<number> = ref(0);
 
 const {
     citiesWeatherList,
@@ -20,17 +20,17 @@ const {
 } = useWeatherSettingsStore();
 
 const weatherData: ComputedRef<OWMCurrentWeather> = computed((): OWMCurrentWeather => {
-    return citiesWeatherList[openedCityId.value]
+    return citiesWeatherList[openedCityIndex.value]
 });
 
 const openNextCity = (): void => {
     if (citiesWeatherList.length < 2) {
         return
     } else {
-        if (openedCityId.value < citiesWeatherList.length - 1) {
-            openedCityId.value++;
+        if (openedCityIndex.value < citiesWeatherList.length - 1) {
+            openedCityIndex.value++;
         } else {
-            openedCityId.value = 0;
+            openedCityIndex.value = 0;
         }
     }
 };
@@ -70,6 +70,7 @@ if (citiesWeatherList.length && citiesWeatherList[0].name) {
 </script>
 
 <template>
+<div v-if="weatherData" class="infoWrapper">
 <div class="header">
     <p v-if="weatherData?.sys?.country" class="cityName">{{ weatherData?.name }}, {{ weatherData?.sys?.country }}</p>
     <button class="settingsBtn" @click="toggleIsShowSettings">
@@ -82,7 +83,7 @@ if (citiesWeatherList.length && citiesWeatherList[0].name) {
 </div>
 <div class="description">
     <span v-if="weatherData?.main?.temp">Ощущается: {{ (weatherData?.main?.feels_like || weatherData?.main?.temp)?.toFixed(0) }}&#176;C.</span>
-    <span>{{ setFirstLetterOfTheStringToCapital(weatherData?.weather[0]?.description) }}.</span>
+    <span v-if="weatherData?.weather[0]?.description">{{ setFirstLetterOfTheStringToCapital(weatherData?.weather[0]?.description) }}.</span>
 </div>
 <div class="additionally">
     <p v-if="weatherData?.wind?.speed">
@@ -100,12 +101,19 @@ if (citiesWeatherList.length && citiesWeatherList[0].name) {
     <p v-if="weatherData?.visibility">Видимость: {{ getVisibility(weatherData?.visibility) }}</p>
 </div>
 <div class="footer">
-    <button class="footerBtn">Обновить</button>
+    <button class="footerBtn" @click="getWeather(citiesWeatherList[openedCityIndex].name)">{{ getDateAndTime(weatherData).localHours }}:{{ getDateAndTime(weatherData).localMinutes }}</button>
     <button v-if="citiesWeatherList.length > 1" class="footerBtn" @click="openNextCity">Следующий</button>
+</div>
 </div>
 </template>
 
 <style scoped lang="scss">
+.infoWrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .header {
     position: relative;
     min-height: 1.4rem;
@@ -166,8 +174,10 @@ if (citiesWeatherList.length && citiesWeatherList[0].name) {
 }
 
 .description {
+    height: 2rem;
     margin-bottom: 1.25rem;
     font-size: 0.7rem;
+    overflow: auto;
 
     & span {
         margin-right: 5px;
@@ -235,9 +245,16 @@ if (citiesWeatherList.length && citiesWeatherList[0].name) {
     flex-wrap: wrap;
     justify-content: space-around;
     gap: 5px;
+    margin-top: auto;
 }
 
 .footerBtn {
     font-size: 0.8rem;
+    color: #555555;
+    transition: all 0.4s linear 0s;
+}
+
+.footerBtn:hover {
+    color: #000000;
 }
 </style>

@@ -10,7 +10,9 @@ import TheWeather from '@/components/TheWeather.vue';
 
 <style scoped lang="scss">
 .wrapper {
+  height: 100%;
   max-height: 300px;
+  width: 100%;
   max-width: 200px;
   padding: 15px 10px;
   display: flex;

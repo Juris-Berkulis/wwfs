@@ -28,6 +28,10 @@ const submit = (): void => {
 </template>
 
 <style scoped lang="scss">
+.form {
+    margin-top: auto;
+}
+
 .label {
     display: block;
     margin-bottom: 0.6rem;

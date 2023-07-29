@@ -31,9 +31,6 @@ html {
 
 body {
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   word-wrap: break-word;
 }
 
@@ -53,4 +50,11 @@ label {
 
 input:focus {
   outline: none;
+}
+
+#app {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

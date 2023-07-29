@@ -39,7 +39,7 @@ export interface OWMCurrentWeather {
     "clouds"?: {
         "all"?: number,
     },
-    "dt"?: number,
+    "dt": number,
     "sys"?: {
         "type"?: number,
         "id"?: number,
@@ -48,8 +48,8 @@ export interface OWMCurrentWeather {
         "sunrise"?: number,
         "sunset"?: number,
     },
-    "timezone"?: number,
+    "timezone": number,
     "id": number,
-    "name"?: string,
+    "name": string,
     "cod"?: number,
 };

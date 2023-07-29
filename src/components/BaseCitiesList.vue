@@ -15,7 +15,7 @@ const {
 
 <style scoped lang="scss">
 .citiesList {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.25rem;
     overflow: auto;
 }
 </style>
