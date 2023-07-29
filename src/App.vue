@@ -13,5 +13,6 @@ import TheWeather from '@/components/TheWeather.vue';
   width: 200px;
   padding: 15px 10px;
   border: 1px solid #000000;
+  background-color: lightskyblue;
 }
 </style>

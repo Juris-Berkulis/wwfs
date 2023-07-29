@@ -38,7 +38,7 @@ const getVisibility = (visibility: number): string => {
 
 <template>
 <div class="header">
-    <p class="cityName">{{ weatherData?.name }}, {{ weatherData?.sys?.country }}</p>
+    <p v-if="weatherData?.sys?.country" class="cityName">{{ weatherData?.name }}, {{ weatherData?.sys?.country }}</p>
     <IconSettings />
 </div>
 <div class="main">
@@ -46,7 +46,7 @@ const getVisibility = (visibility: number): string => {
     <p class="weatherTemp">{{ weatherData?.main?.temp?.toFixed(0) || 'н/д' }}&#176;C</p>
 </div>
 <div class="description">
-    <span>Ощущается: {{ (weatherData?.main?.feels_like || weatherData?.main?.temp)?.toFixed(0) || 'н/д' }}&#176;C.</span>
+    <span v-if="weatherData?.main?.temp">Ощущается: {{ (weatherData?.main?.feels_like || weatherData?.main?.temp)?.toFixed(0) }}&#176;C.</span>
     <span>{{ weatherData?.weather[0]?.description }}.</span>
 </div>
 <div class="additionally">
@@ -72,6 +72,10 @@ const getVisibility = (visibility: number): string => {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+
+    &:not(:has(.cityName)) {
+        justify-content: flex-end;
+    }
 }
 
 .cityName {
@@ -99,15 +103,15 @@ const getVisibility = (visibility: number): string => {
 .description {
     margin-bottom: 20px;
     font-size: 0.7rem;
-}
 
-.description span {
-    margin-right: 5px;
-}
+    & span {
+        margin-right: 5px;
+    }
 
-.description span:last-child {
-    margin-right: 0;
-    text-transform: capitalize;
+    & span:last-child {
+        margin-right: 0;
+        text-transform: capitalize;
+    }
 }
 
 .additionally {
@@ -115,17 +119,17 @@ const getVisibility = (visibility: number): string => {
     flex-wrap: wrap;
     gap: 10px;
     font-size: 0.7rem;
-}
 
-.additionally p {
-    display: flex;
-    align-items: center;
-    width: calc(50% - 5px);
-    text-align: center;
-}
+    & p {
+        display: flex;
+        align-items: center;
+        width: calc(50% - 5px);
+        text-align: center;
+    }
 
-.additionally p:last-child {
-    width: 100%;
+    & p:last-child {
+        width: 100%;
+    }
 }
 
 .arrowIcon {
@@ -142,13 +146,13 @@ const getVisibility = (visibility: number): string => {
     align-items: center;
     border-radius: 50%;
     border: 1px solid #000000;
-}
 
-.preassureIcon span {
-    display: block;
-    height: 60%;
-    width: 10%;
-    background-color: #000000;
-    transform: rotateZ(45deg);
+    & span {
+        display: block;
+        height: 60%;
+        width: 10%;
+        background-color: #000000;
+        transform: rotateZ(45deg);
+    }
 }
 </style>
