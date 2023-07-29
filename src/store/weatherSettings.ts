@@ -1,34 +1,40 @@
 import { defineStore } from "pinia";
-import { ref, type Ref } from "vue";
+import { reactive, ref, type Ref } from "vue";
 import { type OWMCurrentWeather } from '@/types';
 
 export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
     const units: string = 'metric';
     const language: string = 'ru';
-    const citiesWeatherList: Ref<OWMCurrentWeather[]> = ref(JSON.parse(localStorage.getItem('citiesWeatherList') || '[]'));
+    const citiesWeatherList: OWMCurrentWeather[] = reactive(JSON.parse(localStorage.getItem('citiesWeatherList') || '[]'));
 
     const addCityWeatherObjectIntoList = (cityWeatherObject: OWMCurrentWeather): void => {
-        citiesWeatherList.value.push(cityWeatherObject);
-        localStorage.setItem('citiesWeatherList', JSON.stringify(citiesWeatherList.value));
+        citiesWeatherList.push(cityWeatherObject);
+        localStorage.setItem('citiesWeatherList', JSON.stringify(citiesWeatherList));
     };
 
-    const checkCityWeatherObjectInList = (cityWeatherObject: OWMCurrentWeather): null | number => {
+    const findCityWeatherObjectIndexInList = (cityId: number): null | number => {
 
-        let cityId: null | number = null;
+        let cityIndex: null | number = null;
 
-        for (let i: number = 0; i < citiesWeatherList.value.length; i++) {
-            if (
-                citiesWeatherList.value[i].name === cityWeatherObject.name 
-                && 
-                citiesWeatherList.value[i].sys?.country === cityWeatherObject.sys?.country
-            ) {
-                cityId = i;
+        for (let i: number = 0; i < citiesWeatherList.length; i++) {
+            if (citiesWeatherList[i].id === cityId) {
+                cityIndex = i;
 
-                return cityId
+                return cityIndex
             }
         }
 
-        return cityId
+        return cityIndex
+    };
+
+    const deleteCityWeatherObjectFromList = (cityId: number): void => {
+        const cityIndex: number | null = findCityWeatherObjectIndexInList(cityId);
+
+        if (cityIndex !== null) {
+            citiesWeatherList.splice(cityIndex, 1);
+        }
+
+        localStorage.setItem('citiesWeatherList', JSON.stringify(citiesWeatherList));
     };
 
     const getWeather = async (cityName: string): Promise<void> => {
@@ -38,11 +44,11 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
             if (response.ok) {
                 const cityWeatherObject: OWMCurrentWeather = await response.json();
 
-                if (citiesWeatherList.value.length) {
-                    const cityId: number | null = checkCityWeatherObjectInList(cityWeatherObject);
+                if (citiesWeatherList.length) {
+                    const cityIndex: number | null = findCityWeatherObjectIndexInList(cityWeatherObject.id);
 
-                    if (cityId !== null) {
-                        citiesWeatherList.value[cityId] = cityWeatherObject;
+                    if (cityIndex !== null) {
+                        citiesWeatherList[cityIndex] = cityWeatherObject;
                     } else {
                         addCityWeatherObjectIntoList(cityWeatherObject);
                     }
@@ -104,5 +110,6 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
         citiesWeatherList, 
         getWeather, 
         getCoordsByUserLocation,
+        deleteCityWeatherObjectFromList,
     }
 });

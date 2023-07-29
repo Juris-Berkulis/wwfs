@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import BaseCityItem from './BaseCityItem.vue';
+import { useWeatherSettingsStore } from '@/store/weatherSettings';
+
+const {
+    citiesWeatherList, 
+} = useWeatherSettingsStore();
 </script>
 
 <template>
 <ul class="citiesList">
-    <BaseCityItem />
+    <BaseCityItem v-for="cityWeatherObject of citiesWeatherList" :key="cityWeatherObject.id" :cityWeatherObject="cityWeatherObject" />
 </ul>
 </template>
 

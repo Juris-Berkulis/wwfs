@@ -49,7 +49,7 @@ export interface OWMCurrentWeather {
         "sunset"?: number,
     },
     "timezone"?: number,
-    "id"?: number,
+    "id": number,
     "name"?: string,
     "cod"?: number,
 };

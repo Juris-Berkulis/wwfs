@@ -1,6 +1,18 @@
 <script setup lang="ts">
+import type { OWMCurrentWeather } from '@/types';
 import IconBurger from './IconBurger.vue';
 import IconUrn from './IconUrn.vue';
+import { useWeatherSettingsStore } from '@/store/weatherSettings';
+
+interface Props {
+    cityWeatherObject: OWMCurrentWeather,
+};
+
+defineProps<Props>();
+
+const {
+    deleteCityWeatherObjectFromList, 
+} = useWeatherSettingsStore();
 </script>
 
 <template>
@@ -8,8 +20,8 @@ import IconUrn from './IconUrn.vue';
     <button class="burgerBtn">
         <IconBurger />
     </button>
-    <p class="cityName">Город</p>
-    <button class="urnBtn">
+    <p class="cityName">{{ cityWeatherObject.name }}, {{ cityWeatherObject.sys?.country }}</p>
+    <button class="urnBtn" @click="deleteCityWeatherObjectFromList(cityWeatherObject.id)">
         <IconUrn />
     </button>
 </li>
