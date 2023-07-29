@@ -2,30 +2,26 @@
 </script>
 
 <template>
-<button class="urn">
+<div class="urn">
     <div class="knob"></div>
     <div class="lid"></div>
     <div class="box">
         <div class="gloss gloss_1"></div>
         <div class="gloss gloss_2"></div>
     </div>
-</button>
+</div>
 </template>
 
 <style scoped lang="scss">
 .urn {
-    height: 20px;
-    width: 20px;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #777777;
+    color: currentColor;
     transition: all 0.4s linear 0s;
-
-    &:hover {
-        color: #555555;
-    }
 }
 
 .knob {

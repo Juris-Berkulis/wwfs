@@ -2,25 +2,22 @@
 </script>
 
 <template>
-<button class="burger">
+<div class="burger">
     <div class="burgerLine"></div>
     <div class="burgerLine"></div>
     <div class="burgerLine"></div>
-</button>
+</div>
 </template>
 
 <style scoped lang="scss">
 .burger {
-    height: 15px;
-    width: 15px;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    color: #777777;
-
-    &:hover {
-        color: #555555;
-    }
+    color: currentColor;
+    transition: all 0.4s linear 0s;
 }
 
 .burgerLine {

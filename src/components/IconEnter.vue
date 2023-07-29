@@ -2,19 +2,18 @@
 </script>
 
 <template>
-<button class="enter" type="submit">
+<div class="enter">
     <div class="arrowStart">
         <div class="arrowEnd"></div>
     </div>
-</button>
+</div>
 </template>
 
 <style scoped lang="scss">
 .enter {
     position: relative;
-    height: 20px;
-    width: 20px;
-    min-width: 20px;
+    height: 100%;
+    width: 100%;
 }
 
 .arrowStart {
@@ -25,15 +24,15 @@
     height: 10px;
     width: 15px;
     border-top: none;
-    color: #000000;
+    color: currentColor;
     border-right: 2px solid currentColor;
     border-bottom: 2px solid currentColor;
     border-left: none;
     border-bottom-right-radius: 5px;
-    transition: all 0.4s ease-in-out 0s;
+    transition: all 0.2s ease-in-out 0s;
 }
 
-.enter:hover .arrowStart {
+button:hover .arrowStart {
     width: 20px;
 }
 

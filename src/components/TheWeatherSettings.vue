@@ -14,20 +14,28 @@ defineProps<Props>();
 <template>
 <div class="header">
     <p class="headerText">Настройки</p>
-    <IconCross @click="toggleIsShowSettings" />
+    <button class="crossBtn" @click="toggleIsShowSettings">
+        <IconCross />
+    </button>
 </div>
 <ul class="citiesList">
     <li class="cityItem">
-        <IconBurger />
+        <button class="burgerBtn">
+            <IconBurger />
+        </button>
         <p class="cityName">Город</p>
-        <IconUrn />
+        <button class="urnBtn">
+            <IconUrn />
+        </button>
     </li>
 </ul>
 <form class="form" action="">
     <label class="label" for="cityInput">Добавить город</label>
     <div class="inputWrapper">
         <input class="input" type="text" name="cityInput" placeholder="Город">
-        <IconEnter />
+        <button class="enterBtn" type="submit">
+            <IconEnter />
+        </button>
     </div>
 </form>
 </template>
@@ -45,6 +53,12 @@ defineProps<Props>();
     font-weight: 700;
 }
 
+.crossBtn {
+    height: 20px;
+    width: 20px;
+    color: #000000;
+}
+
 .citiesList {
     margin-bottom: 40px;
 }
@@ -60,10 +74,30 @@ defineProps<Props>();
     }
 }
 
+.burgerBtn {
+    height: 15px;
+    width: 15px;
+    color: #777777;
+}
+
+.burgerBtn:hover {
+    color: #555555;
+}
+
 .cityName {
     margin-right: auto;
     margin-left: 10px;
     font-size: 1rem;
+}
+
+.urnBtn {
+    height: 20px;
+    width: 20px;
+    color: #777777;
+}
+
+.urnBtn:hover {
+    color: #555555;
 }
 
 .label {
@@ -83,5 +117,12 @@ defineProps<Props>();
     padding: 5px;
     font-size: 1rem;
     margin-right: 5px;
+}
+
+.enterBtn {
+    height: 20px;
+    width: 20px;
+    min-width: 20px;
+    color: #000000;
 }
 </style>
