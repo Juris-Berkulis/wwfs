@@ -4,6 +4,7 @@ import IconSettings from './IconSettings.vue';
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
 import type { OWMCurrentWeather } from '@/types';
 import { setFirstLetterOfTheStringToCapital, getDateAndTime } from '@/helpers/index';
+import { storeToRefs } from 'pinia';
 
 interface Props {
     toggleIsShowSettings: () => void,
@@ -13,21 +14,25 @@ defineProps<Props>();
 
 const openedCityIndex: Ref<number> = ref(JSON.parse(localStorage.getItem('openedCityIndex') || '0') || 0);
 
+const weatherSettingsStore = useWeatherSettingsStore();
+
 const {
-    citiesWeatherList,
-    getCoordsByUserLocation,
     getWeather, 
 } = useWeatherSettingsStore();
 
+const {
+    citiesWeatherList,
+} = storeToRefs(weatherSettingsStore);
+
 const weatherData: ComputedRef<OWMCurrentWeather> = computed((): OWMCurrentWeather => {
-    return citiesWeatherList[openedCityIndex.value]
+    return citiesWeatherList.value[openedCityIndex.value]
 });
 
 const openNextCity = (): void => {
-    if (citiesWeatherList.length < 2) {
+    if (citiesWeatherList.value.length < 2) {
         return
     } else {
-        if (openedCityIndex.value < citiesWeatherList.length - 1) {
+        if (openedCityIndex.value < citiesWeatherList.value.length - 1) {
             openedCityIndex.value++;
         } else {
             openedCityIndex.value = 0;
@@ -63,49 +68,43 @@ const getVisibility = (visibility: number): string => {
     if (visibility >= 1000) return `${(visibility / 1000).toFixed(1)}км`
     return `${visibility}м`
 }
-
-if (citiesWeatherList.length && citiesWeatherList[0].name) {
-    getWeather(citiesWeatherList[0].name);
-} else {
-    getCoordsByUserLocation();
-}
 </script>
 
 <template>
 <div v-if="weatherData" class="infoWrapper">
-<div class="header">
-    <p v-if="weatherData?.sys?.country" class="cityName">{{ weatherData?.name }}, {{ weatherData?.sys?.country }}</p>
-    <button class="settingsBtn" @click="toggleIsShowSettings">
-        <IconSettings />
-    </button>
-</div>
-<div class="main">
-    <img v-if="weatherData?.weather[0]?.icon" class="weatherImg" :src="`https://openweathermap.org/img/w/${weatherData?.weather[0].icon}.png`" :alt="weatherData?.weather[0].description">
-    <p class="weatherTemp">{{ weatherData?.main?.temp?.toFixed(0) || 'н/д' }}&#176;C</p>
-</div>
-<div class="description">
-    <span v-if="weatherData?.main?.temp">Ощущается: {{ (weatherData?.main?.feels_like || weatherData?.main?.temp)?.toFixed(0) }}&#176;C.</span>
-    <span v-if="weatherData?.weather[0]?.description">{{ setFirstLetterOfTheStringToCapital(weatherData?.weather[0]?.description) }}.</span>
-</div>
-<div class="additionally">
-    <p v-if="weatherData?.wind?.speed">
-        <span v-if="weatherData?.wind?.deg" class="arrowIcon" :style="{transform: `rotateZ(${weatherData?.wind?.deg}deg)`}">!</span>
-        <span>{{ weatherData?.wind?.speed.toFixed(1) }}м/с {{ getWindDirection(weatherData?.wind?.deg) }}</span>
-    </p>
-    <p v-if="weatherData?.main?.pressure">
-        <span class="preassureIcon">
-            <span></span>
-        </span>
-        <span>{{ weatherData?.main?.pressure }}гПа</span>
-    </p>
-    <p v-if="weatherData?.main?.humidity">Влажность: {{ weatherData?.main?.humidity }}%</p>
-    <p v-if="weatherData?.clouds?.all">Облака: {{ weatherData?.clouds?.all }}%</p>
-    <p v-if="weatherData?.visibility">Видимость: {{ getVisibility(weatherData?.visibility) }}</p>
-</div>
-<div class="footer">
-    <button class="footerBtn" @click="getWeather(citiesWeatherList[openedCityIndex].name)">{{ getDateAndTime(weatherData).localHours }}:{{ getDateAndTime(weatherData).localMinutes }}</button>
-    <button v-if="citiesWeatherList.length > 1" class="footerBtn" @click="openNextCity">Следующий</button>
-</div>
+    <div class="header">
+        <p v-if="weatherData?.sys?.country" class="cityName">{{ weatherData?.name }}, {{ weatherData?.sys?.country }}</p>
+        <button class="settingsBtn" @click="toggleIsShowSettings">
+            <IconSettings />
+        </button>
+    </div>
+    <div class="main">
+        <img v-if="weatherData?.weather[0]?.icon" class="weatherImg" :src="`https://openweathermap.org/img/w/${weatherData?.weather[0].icon}.png`" :alt="weatherData?.weather[0].description">
+        <p class="weatherTemp">{{ weatherData?.main?.temp?.toFixed(0) || 'н/д' }}&#176;C</p>
+    </div>
+    <div class="description">
+        <span v-if="weatherData?.main?.temp">Ощущается: {{ (weatherData?.main?.feels_like || weatherData?.main?.temp)?.toFixed(0) }}&#176;C.</span>
+        <span v-if="weatherData?.weather[0]?.description">{{ setFirstLetterOfTheStringToCapital(weatherData?.weather[0]?.description) }}.</span>
+    </div>
+    <div class="additionally">
+        <p v-if="weatherData?.wind?.speed">
+            <span v-if="weatherData?.wind?.deg" class="arrowIcon" :style="{transform: `rotateZ(${weatherData?.wind?.deg}deg)`}">!</span>
+            <span>{{ weatherData?.wind?.speed.toFixed(1) }}м/с {{ getWindDirection(weatherData?.wind?.deg) }}</span>
+        </p>
+        <p v-if="weatherData?.main?.pressure">
+            <span class="preassureIcon">
+                <span></span>
+            </span>
+            <span>{{ weatherData?.main?.pressure }}гПа</span>
+        </p>
+        <p v-if="weatherData?.main?.humidity">Влажность: {{ weatherData?.main?.humidity }}%</p>
+        <p v-if="weatherData?.clouds?.all">Облака: {{ weatherData?.clouds?.all }}%</p>
+        <p v-if="weatherData?.visibility">Видимость: {{ getVisibility(weatherData?.visibility) }}</p>
+    </div>
+    <div class="footer">
+        <button class="footerBtn" @click="getWeather(citiesWeatherList[openedCityIndex].name)">{{ getDateAndTime(weatherData).localHours }}:{{ getDateAndTime(weatherData).localMinutes }}</button>
+        <button v-if="citiesWeatherList.length > 1" class="footerBtn" @click="openNextCity">Следующий</button>
+    </div>
 </div>
 </template>
 

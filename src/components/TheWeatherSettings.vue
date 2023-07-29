@@ -11,17 +11,25 @@ defineProps<Props>();
 </script>
 
 <template>
-<div class="header">
-    <p class="headerText">Настройки</p>
-    <button class="crossBtn" @click="toggleIsShowSettings">
-        <IconCross />
-    </button>
+<div class="settingsWrapper">
+    <div class="header">
+        <p class="headerText">Настройки</p>
+        <button class="crossBtn" @click="toggleIsShowSettings">
+            <IconCross />
+        </button>
+    </div>
+    <BaseCitiesList />
+    <BaseForm />
 </div>
-<BaseCitiesList />
-<BaseForm />
 </template>
 
 <style scoped lang="scss">
+.settingsWrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .header {
     position: relative;
     min-height: 1.4rem;

@@ -1,11 +1,12 @@
 import { defineStore } from "pinia";
-import { reactive } from "vue";
-import { type OWMCurrentWeather } from '@/types';
+import { reactive, ref, type Ref } from "vue";
+import { type Loading, type OWMCurrentWeather } from '@/types';
 
 export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
     const units: string = 'metric';
     const language: string = 'ru';
     const citiesWeatherList: OWMCurrentWeather[] = reactive(JSON.parse(localStorage.getItem('citiesWeatherList') || '[]'));
+    const loading: Ref<Loading> = ref(null);
 
     const addCityWeatherObjectIntoList = (cityWeatherObject: OWMCurrentWeather): void => {
         citiesWeatherList.push(cityWeatherObject);
@@ -38,6 +39,8 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
     };
 
     const getWeather = async (cityName: string): Promise<void> => {
+        loading.value = 'waitWeather';
+
         try {
             const response: Response = await fetch(`${import.meta.env.VITE_API_OPENWEATHERMAP_URL_FOR_GET_CURRENT_WEATHER_BY_CITY_NAME}?q=${cityName}&appid=${import.meta.env.VITE_API_KEY_FOR_OPENWEATHERMAP}&units=${units}&lang=${language}`);
     
@@ -60,11 +63,15 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
             }
         } catch (error) {
             console.error(error);
+        } finally {
+            loading.value = null;
         }
     };
 
     const getCityNameByCoords = async (coordsLatitude: number, coordsLongitude: number): Promise<void> => {
         const citiesCountLimit = 1;
+
+        loading.value = 'waitCityName';
         
         try {
             const resCityName: Response = await fetch(`${import.meta.env.VITE_API_OPENWEATHERMAP_URL_FOR_GET_CITY_NAME_BY_COORDS}?lat=${coordsLatitude}&lon=${coordsLongitude}&limit=${citiesCountLimit}&appid=${import.meta.env.VITE_API_KEY_FOR_OPENWEATHERMAP}`);
@@ -78,6 +85,8 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
             }
         } catch (error: any) {
             console.error(`${error.message}`);
+        } finally {
+            loading.value = null;
         }
     };
 
@@ -111,5 +120,6 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
         getWeather, 
         getCoordsByUserLocation,
         deleteCityWeatherObjectFromList,
+        loading, 
     }
 });

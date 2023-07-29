@@ -53,3 +53,5 @@ export interface OWMCurrentWeather {
     "name": string,
     "cod"?: number,
 };
+
+export type Loading = 'waitWeather' | 'waitCityName' | null;
