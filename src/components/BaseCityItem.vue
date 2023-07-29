@@ -32,10 +32,18 @@ const {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 
     &:last-child {
         margin-bottom: 0;
+    }
+
+    @media (max-width: 200px) {
+        & {
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
     }
 }
 
@@ -43,6 +51,12 @@ const {
     height: 15px;
     width: 15px;
     color: #777777;
+
+    @media (max-width: 200px) {
+        & {
+            order: 2;
+        }
+    }
 }
 
 .burgerBtn:hover {
@@ -52,13 +66,29 @@ const {
 .cityName {
     margin-right: auto;
     margin-left: 10px;
-    font-size: 1rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+
+    @media (max-width: 200px) {
+        & {
+            width: 100%;
+            margin-left: 0;
+            order: 1;
+        }
+    }
 }
 
 .urnBtn {
     height: 20px;
     width: 20px;
     color: #777777;
+
+    @media (max-width: 200px) {
+        & {
+            order: 2;
+        }
+    }
 }
 
 .urnBtn:hover {

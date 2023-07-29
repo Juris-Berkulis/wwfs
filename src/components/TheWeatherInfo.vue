@@ -3,6 +3,7 @@ import { computed, ref, type ComputedRef, type Ref } from 'vue';
 import IconSettings from './IconSettings.vue';
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
 import type { OWMCurrentWeather } from '@/types';
+import { setFirstLetterOfTheStringToCapital } from '@/helpers/index';
 
 interface Props {
     toggleIsShowSettings: () => void,
@@ -71,7 +72,9 @@ if (citiesWeatherList.length && citiesWeatherList[0].name) {
 <template>
 <div class="header">
     <p v-if="weatherData?.sys?.country" class="cityName">{{ weatherData?.name }}, {{ weatherData?.sys?.country }}</p>
-    <IconSettings @click="toggleIsShowSettings" />
+    <button class="settingsBtn" @click="toggleIsShowSettings">
+        <IconSettings />
+    </button>
 </div>
 <div class="main">
     <img v-if="weatherData?.weather[0]?.icon" class="weatherImg" :src="`https://openweathermap.org/img/w/${weatherData?.weather[0].icon}.png`" :alt="weatherData?.weather[0].description">
@@ -79,7 +82,7 @@ if (citiesWeatherList.length && citiesWeatherList[0].name) {
 </div>
 <div class="description">
     <span v-if="weatherData?.main?.temp">Ощущается: {{ (weatherData?.main?.feels_like || weatherData?.main?.temp)?.toFixed(0) }}&#176;C.</span>
-    <span>{{ weatherData?.weather[0]?.description }}.</span>
+    <span>{{ setFirstLetterOfTheStringToCapital(weatherData?.weather[0]?.description) }}.</span>
 </div>
 <div class="additionally">
     <p v-if="weatherData?.wind?.speed">
@@ -96,15 +99,21 @@ if (citiesWeatherList.length && citiesWeatherList[0].name) {
     <p v-if="weatherData?.clouds?.all">Облака: {{ weatherData?.clouds?.all }}%</p>
     <p v-if="weatherData?.visibility">Видимость: {{ getVisibility(weatherData?.visibility) }}</p>
 </div>
-<button v-if="citiesWeatherList.length > 1" @click="openNextCity">Следующий</button>
+<div class="footer">
+    <button class="footerBtn">Обновить</button>
+    <button v-if="citiesWeatherList.length > 1" class="footerBtn" @click="openNextCity">Следующий</button>
+</div>
 </template>
 
 <style scoped lang="scss">
 .header {
+    position: relative;
+    min-height: 1.4rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
 
     &:not(:has(.cityName)) {
         justify-content: flex-end;
@@ -112,15 +121,34 @@ if (citiesWeatherList.length && citiesWeatherList[0].name) {
 }
 
 .cityName {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 1.5rem);
     font-size: 1rem;
+    line-height: 1.4rem;
     font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+
+    @media (max-width: 200px) {
+        & {
+            font-size: 0.8rem;
+        }
+    }
+}
+
+.settingsBtn {
+    height: 1.25rem;
+    width: 1.25rem;
 }
 
 .main {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 .weatherImg {
@@ -131,10 +159,14 @@ if (citiesWeatherList.length && citiesWeatherList[0].name) {
 .weatherTemp {
     font-size: 2rem;
     font-weight: 700;
+
+    @media (max-width: 150px) {
+    font-size: 1.2rem;
+    }
 }
 
 .description {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
     font-size: 0.7rem;
 
     & span {
@@ -143,22 +175,29 @@ if (citiesWeatherList.length && citiesWeatherList[0].name) {
 
     & span:last-child {
         margin-right: 0;
-        text-transform: capitalize;
     }
 }
 
 .additionally {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 10px;
+    gap: 0.6rem 10px;
+    margin-bottom: 0.6rem;
     font-size: 0.7rem;
+    overflow: auto;
 
     & p {
         display: flex;
         align-items: center;
         width: calc(50% - 5px);
         text-align: center;
+        white-space: nowrap;
+
+        @media (max-width: 200px) {
+            & {
+                width: 100%;
+            }
+        }
     }
 
     & p:last-child {
@@ -172,21 +211,33 @@ if (citiesWeatherList.length && citiesWeatherList[0].name) {
 }
 
 .preassureIcon {
+    position: relative;
     margin-right: 5px;
-    height: 10px;
-    width: 10px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
+    height: 0.7rem;
+    width: 0.7rem;
     border-radius: 50%;
     border: 1px solid #000000;
 
     & span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotateZ(45deg);
         display: block;
         height: 60%;
         width: 10%;
         background-color: #000000;
-        transform: rotateZ(45deg);
     }
+}
+
+.footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 5px;
+}
+
+.footerBtn {
+    font-size: 0.8rem;
 }
 </style>

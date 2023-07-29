@@ -2,21 +2,21 @@
 </script>
 
 <template>
-<button class="settings">
+<div class="settings">
     <div class="settingsCircle settingsCircle_1"></div>
     <div class="settingsLever settingsLever_1"></div>
     <div class="settingsLever settingsLever_2"></div>
     <div class="settingsLever settingsLever_3"></div>
     <div class="settingsCircle settingsCircle_2"></div>
     <div class="settingsCircle settingsCircle_3"></div>
-</button>
+</div>
 </template>
 
 <style scoped lang="scss">
 .settings {
     position: relative;
-    height: 20px;
-    width: 20px;
+    height: 100%;
+    width: 100%;
     transform: rotateZ(0deg);
     transition: all 0.4s ease-in-out 0s;
 }

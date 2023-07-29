@@ -23,20 +23,28 @@ defineProps<Props>();
 
 <style scoped lang="scss">
 .header {
+    position: relative;
+    min-height: 1.4rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
 }
 
 .headerText {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 1.5rem);
     font-size: 1rem;
+    line-height: 1.4rem;;
     font-weight: 700;
 }
 
 .crossBtn {
-    height: 20px;
-    width: 20px;
+    height: 1.25rem;
+    width: 1.25rem;
     color: #000000;
 }
 </style>

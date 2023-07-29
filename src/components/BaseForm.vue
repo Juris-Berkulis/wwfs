@@ -30,14 +30,20 @@ const submit = (): void => {
 <style scoped lang="scss">
 .label {
     display: block;
-    margin-bottom: 10px;
-    font-size: 1rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.8rem;
 }
 
 .inputWrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media (max-width: 150px) {
+        & {
+            flex-direction: column;
+        }
+    }
 }
 
 .input {
@@ -52,5 +58,12 @@ const submit = (): void => {
     width: 20px;
     min-width: 20px;
     color: #000000;
+
+    @media (max-width: 150px) {
+        & {
+            width: 100%;
+            padding: 0 calc(50% - 10px);
+        }
+    }
 }
 </style>
