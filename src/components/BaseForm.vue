@@ -1,12 +1,25 @@
 <script setup lang="ts">
+import { ref, type Ref} from 'vue';
 import IconEnter from './IconEnter.vue';
+import { useWeatherSettingsStore } from '@/store/weatherSettings';
+
+const {
+    getWeather,
+} = useWeatherSettingsStore();
+
+const cityNameInInput: Ref<string> = ref('');
+
+const submit = (): void => {
+    getWeather(cityNameInInput.value);
+    cityNameInInput.value = '';
+};
 </script>
 
 <template>
-<form class="form" action="">
+<form class="form" @submit.prevent="submit" action="">
     <label class="label" for="cityInput">Добавить город</label>
     <div class="inputWrapper">
-        <input class="input" type="text" id="cityInput" placeholder="Город">
+        <input v-model="cityNameInInput" class="input" type="text" id="cityInput" placeholder="Город">
         <button class="enterBtn" type="submit">
             <IconEnter />
         </button>

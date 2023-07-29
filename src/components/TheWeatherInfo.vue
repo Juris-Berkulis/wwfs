@@ -1,13 +1,38 @@
 <script setup lang="ts">
-import type { OWMCurrentWeather } from '@/types';
+import { computed, ref, type ComputedRef, type Ref } from 'vue';
 import IconSettings from './IconSettings.vue';
+import { useWeatherSettingsStore } from '@/store/weatherSettings';
+import type { OWMCurrentWeather } from '@/types';
 
 interface Props {
-    weatherData: OWMCurrentWeather | null,
     toggleIsShowSettings: () => void,
 };
 
 defineProps<Props>();
+
+const openedCityId: Ref<number> = ref(0);
+
+const {
+    citiesWeatherList,
+    getCoordsByUserLocation,
+    getWeather, 
+} = useWeatherSettingsStore();
+
+const weatherData: ComputedRef<OWMCurrentWeather> = computed((): OWMCurrentWeather => {
+    return citiesWeatherList[openedCityId.value]
+});
+
+const openNextCity = (): void => {
+    if (citiesWeatherList.length < 2) {
+        return
+    } else {
+        if (openedCityId.value < citiesWeatherList.length - 1) {
+            openedCityId.value++;
+        } else {
+            openedCityId.value = 0;
+        }
+    }
+};
 
 const getWindDirection = (degry: number | undefined): string => {
     if (degry === undefined) return 'н/д'
@@ -35,6 +60,12 @@ const getVisibility = (visibility: number): string => {
     if (visibility >= 1000) return `${(visibility / 1000).toFixed(1)}км`
     return `${visibility}м`
 }
+
+if (citiesWeatherList.length && citiesWeatherList[0].name) {
+    getWeather(citiesWeatherList[0].name);
+} else {
+    getCoordsByUserLocation();
+}
 </script>
 
 <template>
@@ -43,7 +74,7 @@ const getVisibility = (visibility: number): string => {
     <IconSettings @click="toggleIsShowSettings" />
 </div>
 <div class="main">
-    <img class="weatherImg" :src="`https://openweathermap.org/img/w/${weatherData?.weather[0].icon}.png`" :alt="weatherData?.weather[0].description">
+    <img v-if="weatherData?.weather[0]?.icon" class="weatherImg" :src="`https://openweathermap.org/img/w/${weatherData?.weather[0].icon}.png`" :alt="weatherData?.weather[0].description">
     <p class="weatherTemp">{{ weatherData?.main?.temp?.toFixed(0) || 'н/д' }}&#176;C</p>
 </div>
 <div class="description">
@@ -65,6 +96,7 @@ const getVisibility = (visibility: number): string => {
     <p v-if="weatherData?.clouds?.all">Облака: {{ weatherData?.clouds?.all }}%</p>
     <p v-if="weatherData?.visibility">Видимость: {{ getVisibility(weatherData?.visibility) }}</p>
 </div>
+<button v-if="citiesWeatherList.length > 1" @click="openNextCity">Следующий</button>
 </template>
 
 <style scoped lang="scss">
@@ -119,6 +151,7 @@ const getVisibility = (visibility: number): string => {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    margin-bottom: 10px;
     font-size: 0.7rem;
 
     & p {
