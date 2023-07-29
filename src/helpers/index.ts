@@ -7,12 +7,16 @@ export const setFirstLetterOfTheStringToCapital = (str: string): string => {
 };
 
 interface GetDateAndTime {
-    localYear: number, 
-    localMonth: number, 
-    localDayNumber: number, 
-    localHours: number, 
-    localMinutes: number, 
-    localWeekDayNumber: number, 
+    localYear: string, 
+    localMonth: string, 
+    localDayNumber: string, 
+    localHours: string, 
+    localMinutes: string, 
+    localWeekDayNumber: string, 
+};
+
+const addZeroToBeginingOfNumber = (num: number): string => {
+    return num < 10 ? `0${num}` : `${num}`
 };
 
 export const getDateAndTime = (cityWeatherObject: OWMCurrentWeather):GetDateAndTime => {
@@ -26,11 +30,11 @@ export const getDateAndTime = (cityWeatherObject: OWMCurrentWeather):GetDateAndT
     const localWeekDayNumber: number = date.getUTCDay();
 
     return {
-        localYear, 
-        localMonth, 
-        localDayNumber, 
-        localHours, 
-        localMinutes, 
-        localWeekDayNumber, 
+        localYear: `${localYear}`, 
+        localMonth: addZeroToBeginingOfNumber(localMonth), 
+        localDayNumber: addZeroToBeginingOfNumber(localDayNumber), 
+        localHours: addZeroToBeginingOfNumber(localHours), 
+        localMinutes: addZeroToBeginingOfNumber(localMinutes), 
+        localWeekDayNumber: `${localWeekDayNumber}`, 
     }
 };

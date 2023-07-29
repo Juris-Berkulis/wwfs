@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { reactive, ref, type Ref } from "vue";
+import { reactive } from "vue";
 import { type OWMCurrentWeather } from '@/types';
 
 export const useWeatherSettingsStore = defineStore('weatherSettings', () => {

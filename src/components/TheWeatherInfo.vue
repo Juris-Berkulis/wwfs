@@ -11,7 +11,7 @@ interface Props {
 
 defineProps<Props>();
 
-const openedCityIndex: Ref<number> = ref(0);
+const openedCityIndex: Ref<number> = ref(JSON.parse(localStorage.getItem('openedCityIndex') || '0') || 0);
 
 const {
     citiesWeatherList,
@@ -33,6 +33,8 @@ const openNextCity = (): void => {
             openedCityIndex.value = 0;
         }
     }
+
+    localStorage.setItem('openedCityIndex', JSON.stringify(openedCityIndex.value));
 };
 
 const getWindDirection = (degry: number | undefined): string => {
