@@ -2,14 +2,14 @@
 </script>
 
 <template>
-<div class="settings">
+<button class="settings">
     <div class="settingsCircle settingsCircle_1"></div>
     <div class="settingsLever settingsLever_1"></div>
     <div class="settingsLever settingsLever_2"></div>
     <div class="settingsLever settingsLever_3"></div>
     <div class="settingsCircle settingsCircle_2"></div>
     <div class="settingsCircle settingsCircle_3"></div>
-</div>
+</button>
 </template>
 
 <style scoped lang="scss">
@@ -17,7 +17,6 @@
     position: relative;
     height: 20px;
     width: 20px;
-    cursor: pointer;
     transform: rotateZ(0deg);
     transition: all 0.4s ease-in-out 0s;
 }

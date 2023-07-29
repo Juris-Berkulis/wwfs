@@ -4,6 +4,7 @@ import IconSettings from './IconSettings.vue';
 
 interface Props {
     weatherData: OWMCurrentWeather | null,
+    toggleIsShowSettings: () => void,
 };
 
 defineProps<Props>();
@@ -39,7 +40,7 @@ const getVisibility = (visibility: number): string => {
 <template>
 <div class="header">
     <p v-if="weatherData?.sys?.country" class="cityName">{{ weatherData?.name }}, {{ weatherData?.sys?.country }}</p>
-    <IconSettings />
+    <IconSettings @click="toggleIsShowSettings" />
 </div>
 <div class="main">
     <img class="weatherImg" :src="`https://openweathermap.org/img/w/${weatherData?.weather[0].icon}.png`" :alt="weatherData?.weather[0].description">

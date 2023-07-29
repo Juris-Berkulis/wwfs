@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
 import TheWeatherInfo from './TheWeatherInfo.vue';
+import TheWeatherSettings from './TheWeatherSettings.vue';
 import { type OWMCurrentWeather } from '@/types';
 
 const weatherData: Ref<OWMCurrentWeather | null> = ref(null);
 const cityName: Ref<string> = ref('moscow');
 const units: string = 'metric';
 const language: string = 'ru';
+const isShowSettings: Ref<boolean> = ref(false);
+
+const toggleIsShowSettings = ():void => {
+    isShowSettings.value = !isShowSettings.value
+};
 
 const getWeather = async (): Promise<void> => {
     try {
@@ -27,7 +33,8 @@ getWeather();
 </script>
 
 <template>
-<TheWeatherInfo :weatherData="weatherData" />
+<TheWeatherSettings v-if="isShowSettings" :toggleIsShowSettings="toggleIsShowSettings" />
+<TheWeatherInfo v-else :weatherData="weatherData" :toggleIsShowSettings="toggleIsShowSettings" />
 </template>
 
 <style scoped lang="scss">
