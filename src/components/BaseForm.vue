@@ -10,8 +10,10 @@ const {
 const cityNameInInput: Ref<string> = ref('');
 
 const submit = (): void => {
-    getWeather(cityNameInInput.value);
-    cityNameInInput.value = '';
+    if (cityNameInInput.value.trim()) {
+        getWeather(cityNameInInput.value);
+        cityNameInInput.value = '';
+    }
 };
 </script>
 

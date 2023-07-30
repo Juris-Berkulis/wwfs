@@ -2,6 +2,7 @@
 import { computed, ref, type ComputedRef, type Ref } from 'vue';
 import IconSettings from './IconSettings.vue';
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
+import { useWeatherInfoStore } from '@/store/weatherInfo';
 import type { OWMCurrentWeather } from '@/types';
 import { setFirstLetterOfTheStringToCapital, getDateAndTime } from '@/helpers/index';
 import { storeToRefs } from 'pinia';
@@ -11,8 +12,6 @@ interface Props {
 };
 
 defineProps<Props>();
-
-const openedCityIndex: Ref<number> = ref(JSON.parse(localStorage.getItem('openedCityIndex') || '0') || 0);
 
 const weatherSettingsStore = useWeatherSettingsStore();
 
@@ -24,23 +23,19 @@ const {
     citiesWeatherList,
 } = storeToRefs(weatherSettingsStore);
 
+const weatherInfoStore = useWeatherInfoStore();
+
+const {
+    openNextCity,
+} = useWeatherInfoStore();
+
+const {
+    openedCityIndex,
+} = storeToRefs(weatherInfoStore);
+
 const weatherData: ComputedRef<OWMCurrentWeather> = computed((): OWMCurrentWeather => {
     return citiesWeatherList.value[openedCityIndex.value]
 });
-
-const openNextCity = (): void => {
-    if (citiesWeatherList.value.length < 2) {
-        return
-    } else {
-        if (openedCityIndex.value < citiesWeatherList.value.length - 1) {
-            openedCityIndex.value++;
-        } else {
-            openedCityIndex.value = 0;
-        }
-    }
-
-    localStorage.setItem('openedCityIndex', JSON.stringify(openedCityIndex.value));
-};
 
 const getWindDirection = (degry: number | undefined): string => {
     if (degry === undefined) return 'н/д'

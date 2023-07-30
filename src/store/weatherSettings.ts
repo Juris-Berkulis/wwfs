@@ -30,9 +30,8 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
 
         if (cityIndex !== null) {
             citiesWeatherList.splice(cityIndex, 1);
+            localStorage.setItem('citiesWeatherList', JSON.stringify(citiesWeatherList));
         }
-
-        localStorage.setItem('citiesWeatherList', JSON.stringify(citiesWeatherList));
     };
 
     const getWeather = async (cityName: string): Promise<void> => {

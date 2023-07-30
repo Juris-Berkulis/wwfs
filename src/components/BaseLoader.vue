@@ -50,6 +50,6 @@ const {
     border-radius: 50%;
     border: 10px solid currentColor;
     border-bottom: 10px solid transparent;
-    animation: loader 2s linear 0s infinite normal;
+    animation: loader 0.4s linear 0s infinite normal;
 }
 </style>
