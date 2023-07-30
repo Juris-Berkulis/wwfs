@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia';
 import BaseCityItem from './BaseCityItem.vue';
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
+import { useRootStore } from '@/store/root';
 import type { OWMCurrentWeather } from '@/types';
 
 const weatherSettingsStore = useWeatherSettingsStore();
@@ -14,6 +15,11 @@ const {
     citiesWeatherList, 
 } = storeToRefs(weatherSettingsStore);
 
+const {
+    getOpenCityId,
+    moveOpenedCity,
+} = useRootStore();
+
 const onDragStart = (event: DragEvent, cityId: number): void => {
     if (event.dataTransfer) {
         event.dataTransfer.dropEffect = 'move';
@@ -24,6 +30,8 @@ const onDragStart = (event: DragEvent, cityId: number): void => {
 
 const onDrop = (event: DragEvent, droppedCityIndex?: number): void => {
     if (event.dataTransfer) {
+        const cityOpenedId = getOpenCityId();
+
         const dragedCityIndex: number = parseInt(event.dataTransfer.getData('cityId'));
 
         const movedCity: OWMCurrentWeather = citiesWeatherList.value.splice(dragedCityIndex, 1)[0];
@@ -35,6 +43,7 @@ const onDrop = (event: DragEvent, droppedCityIndex?: number): void => {
         }
 
         saveCitiesWeatherListIntoLocalStorage();
+        moveOpenedCity(cityOpenedId);
     }
 };
 </script>

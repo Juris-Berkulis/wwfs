@@ -1,6 +1,7 @@
 import { defineStore, storeToRefs } from "pinia";
 import { useWeatherSettingsStore } from "./weatherSettings";
 import { useWeatherInfoStore } from "./weatherInfo";
+import type { OWMCurrentWeather } from "@/types";
 
 export const useRootStore = defineStore('root', () => {
     const {
@@ -59,9 +60,23 @@ export const useRootStore = defineStore('root', () => {
         }
     };
 
+    const getOpenCityId = (): number => {
+        return citiesWeatherList[openedCityIndex.value].id
+    };
+
+    const moveOpenedCity = (cityOpenedId: number): void => {
+        const newOpenedCityIndex = citiesWeatherList.findIndex((city: OWMCurrentWeather) => {
+            return city.id === cityOpenedId
+        });
+
+        saveOpenedCityIndexIntoLocalStorage(newOpenedCityIndex);
+    };
+
     return {
         openPreviousCity,
         openNextCity,
         deleteCityWeatherObjectFromList,
+        getOpenCityId,
+        moveOpenedCity,
     }
 });
