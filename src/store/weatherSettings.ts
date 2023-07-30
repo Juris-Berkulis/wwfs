@@ -10,6 +10,10 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
     const citiesWeatherList: OWMCurrentWeather[] = reactive(JSON.parse(localStorage.getItem('citiesWeatherList') || '[]'));
     const loading: Ref<Loading> = ref(null);
 
+    const saveCitiesWeatherListIntoLocalStorage = (): void => {
+        localStorage.setItem('citiesWeatherList', JSON.stringify(citiesWeatherList));
+    };
+
     const addCityWeatherObjectIntoList = (cityWeatherObject: OWMCurrentWeather): void => {
         citiesWeatherList.push(cityWeatherObject);
         localStorage.setItem('citiesWeatherList', JSON.stringify(citiesWeatherList));
@@ -104,6 +108,7 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
 
     return {
         citiesWeatherList, 
+        saveCitiesWeatherListIntoLocalStorage,
         getWeather, 
         getCoordsByUserLocation,
         findCityWeatherObjectIndexInList,

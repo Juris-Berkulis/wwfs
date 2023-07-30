@@ -5,6 +5,7 @@ import { useWeatherInfoStore } from "./weatherInfo";
 export const useRootStore = defineStore('root', () => {
     const {
         citiesWeatherList,
+        saveCitiesWeatherListIntoLocalStorage,
         findCityWeatherObjectIndexInList,
     } = useWeatherSettingsStore();
 
@@ -46,7 +47,7 @@ export const useRootStore = defineStore('root', () => {
 
         if (cityIndex !== null) {
             citiesWeatherList.splice(cityIndex, 1);
-            localStorage.setItem('citiesWeatherList', JSON.stringify(citiesWeatherList));
+            saveCitiesWeatherListIntoLocalStorage();
 
             if (
                 openedCityIndex.value === cityIndex 

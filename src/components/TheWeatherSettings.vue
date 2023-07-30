@@ -2,19 +2,24 @@
 import IconCross from './IconCross.vue';
 import BaseCitiesList from './BaseCitiesList.vue';
 import BaseForm from './BaseForm.vue';
+import { useWeatherSettingsStore } from '@/store/weatherSettings';
 
 interface Props {
     toggleIsShowSettings: () => void,
 };
 
 defineProps<Props>();
+
+const {
+    citiesWeatherList,
+} = useWeatherSettingsStore();
 </script>
 
 <template>
 <div class="settingsWrapper">
     <div class="header">
         <p class="headerText">Настройки</p>
-        <button class="crossBtn" @click="toggleIsShowSettings">
+        <button v-if="citiesWeatherList.length" class="crossBtn" @click="toggleIsShowSettings">
             <IconCross />
         </button>
     </div>
