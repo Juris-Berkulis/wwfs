@@ -10,9 +10,7 @@ export const useWeatherInfoStore = defineStore('weatherInfo', () => {
     };
 
     const resetOpenedCityIndex = (): void => {
-        openedCityIndex.value = 0;
-
-        saveOpenedCityIndexIntoLocalStorage();
+        saveOpenedCityIndexIntoLocalStorage(0);
     };
 
     return {
