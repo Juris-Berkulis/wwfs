@@ -43,8 +43,6 @@ export const useRootStore = defineStore('root', () => {
     const deleteCityWeatherObjectFromList = (cityId: number): void => {
         const cityIndex: number | null = findCityWeatherObjectIndexInList(cityId);
 
-        console.log(`${openedCityIndex.value} и ${cityIndex}`)
-
         if (cityIndex !== null) {
             citiesWeatherList.splice(cityIndex, 1);
             saveCitiesWeatherListIntoLocalStorage();
