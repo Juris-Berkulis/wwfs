@@ -3,6 +3,7 @@ import { computed, ref, type ComputedRef, type Ref } from 'vue';
 import IconSettings from './IconSettings.vue';
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
 import { useWeatherInfoStore } from '@/store/weatherInfo';
+import { useRootStore } from '@/store/root';
 import type { OWMCurrentWeather } from '@/types';
 import { setFirstLetterOfTheStringToCapital, getDateAndTime } from '@/helpers/index';
 import { storeToRefs } from 'pinia';
@@ -26,12 +27,12 @@ const {
 const weatherInfoStore = useWeatherInfoStore();
 
 const {
-    openNextCity,
-} = useWeatherInfoStore();
-
-const {
     openedCityIndex,
 } = storeToRefs(weatherInfoStore);
+
+const {
+    openNextCity,
+} = useRootStore();
 
 const weatherData: ComputedRef<OWMCurrentWeather> = computed((): OWMCurrentWeather => {
     return citiesWeatherList.value[openedCityIndex.value]

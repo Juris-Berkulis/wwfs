@@ -25,15 +25,6 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
         return null
     };
 
-    const deleteCityWeatherObjectFromList = (cityId: number): void => {
-        const cityIndex: number | null = findCityWeatherObjectIndexInList(cityId);
-
-        if (cityIndex !== null) {
-            citiesWeatherList.splice(cityIndex, 1);
-            localStorage.setItem('citiesWeatherList', JSON.stringify(citiesWeatherList));
-        }
-    };
-
     const getWeather = async (cityName: string): Promise<void> => {
         loading.value = 'waitWeather';
 
@@ -115,7 +106,7 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
         citiesWeatherList, 
         getWeather, 
         getCoordsByUserLocation,
-        deleteCityWeatherObjectFromList,
+        findCityWeatherObjectIndexInList,
         loading, 
     }
 });

@@ -2,7 +2,7 @@
 import type { OWMCurrentWeather } from '@/types';
 import IconBurger from './IconBurger.vue';
 import IconUrn from './IconUrn.vue';
-import { useWeatherSettingsStore } from '@/store/weatherSettings';
+import { useRootStore } from '@/store/root';
 
 interface Props {
     cityWeatherObject: OWMCurrentWeather,
@@ -12,7 +12,7 @@ defineProps<Props>();
 
 const {
     deleteCityWeatherObjectFromList, 
-} = useWeatherSettingsStore();
+} = useRootStore();
 </script>
 
 <template>
