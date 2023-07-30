@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
 import { reactive, ref, type Ref } from "vue";
-import { type Loading, type OWMCurrentWeather } from '@/types';
+import { type OWMCurrentWeather } from '@/types';
+
+type Loading = 'waitWeather' | 'waitCityName' | null;
 
 export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
     const units: string = 'metric';
@@ -14,18 +16,13 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
     };
 
     const findCityWeatherObjectIndexInList = (cityId: number): null | number => {
-
-        let cityIndex: null | number = null;
-
-        for (let i: number = 0; i < citiesWeatherList.length; i++) {
-            if (citiesWeatherList[i].id === cityId) {
-                cityIndex = i;
-
+        for (let cityIndex: number = 0; cityIndex < citiesWeatherList.length; cityIndex++) {
+            if (citiesWeatherList[cityIndex].id === cityId) {
                 return cityIndex
             }
         }
 
-        return cityIndex
+        return null
     };
 
     const deleteCityWeatherObjectFromList = (cityId: number): void => {
@@ -102,10 +99,10 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
             console.error(`Ошибка получения данных о местоположении!\n${error.code}: ${error.message}`);
         };
     
-        const options = { //* - Подробнее на сайте: "https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition".
-            enableHighAccuracy: true, //* - Логическое значение, указывающее, что приложение хотело бы получить наилучшие возможные результаты.
-            timeout: Infinity, //* -  Максимальное время (в миллисекундах), которое может потребоваться устройству для возврата позиции.
-            maximumAge: 60 * 1000, //* - Максимальный возраст в миллисекундах возможной кэшированной позиции.
+        const options = {
+            enableHighAccuracy: true,
+            timeout: Infinity,
+            maximumAge: 60 * 1000,
         };
     
         if (!navigator.geolocation) {
