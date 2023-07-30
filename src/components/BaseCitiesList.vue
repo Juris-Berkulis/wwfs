@@ -1,21 +1,54 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
 import BaseCityItem from './BaseCityItem.vue';
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
+import type { OWMCurrentWeather } from '@/types';
+
+const weatherSettingsStore = useWeatherSettingsStore();
+
+const {
+    saveCitiesWeatherListIntoLocalStorage,
+} = useWeatherSettingsStore();
 
 const {
     citiesWeatherList, 
-} = useWeatherSettingsStore();
+} = storeToRefs(weatherSettingsStore);
+
+const onDragStart = (event: DragEvent, cityId: number): void => {
+    if (event.dataTransfer) {
+        event.dataTransfer.dropEffect = 'move';
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.setData('cityId', cityId.toString());
+    }
+};
+
+const onDrop = (event: DragEvent, droppedCityIndex?: number): void => {
+    if (event.dataTransfer) {
+        const dragedCityIndex: number = parseInt(event.dataTransfer.getData('cityId'));
+
+        const movedCity: OWMCurrentWeather = citiesWeatherList.value.splice(dragedCityIndex, 1)[0];
+
+        if (droppedCityIndex !== undefined) {
+            citiesWeatherList.value.splice(droppedCityIndex, 0, movedCity);
+        } else {
+            citiesWeatherList.value.push(movedCity);
+        }
+
+        saveCitiesWeatherListIntoLocalStorage();
+    }
+};
 </script>
 
 <template>
-<ul class="citiesList">
-    <BaseCityItem v-for="cityWeatherObject of citiesWeatherList" :key="cityWeatherObject.id" :cityWeatherObject="cityWeatherObject" />
+<ul class="citiesList" @dragenter.prevent="" @dragover.prevent="" @drop="(event: DragEvent) => onDrop(event)">
+    <BaseCityItem v-for="cityWeatherObject, index of citiesWeatherList" :key="cityWeatherObject.id" :cityIndex="index" :cityWeatherObject="cityWeatherObject" :onDragStart="onDragStart" :onDrop="onDrop" />
 </ul>
 </template>
 
 <style scoped lang="scss">
 .citiesList {
-    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+    flex-grow: 1;
     overflow: auto;
 }
 </style>

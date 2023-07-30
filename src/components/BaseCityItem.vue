@@ -5,7 +5,10 @@ import IconUrn from './IconUrn.vue';
 import { useRootStore } from '@/store/root';
 
 interface Props {
+    cityIndex: number,
     cityWeatherObject: OWMCurrentWeather,
+    onDragStart: (event: DragEvent, cityId: number) => void;
+    onDrop: (event: DragEvent, cityId: number) => void;
 };
 
 defineProps<Props>();
@@ -16,7 +19,7 @@ const {
 </script>
 
 <template>
-<li class="cityItem">
+<li class="cityItem" draggable="true" @dragstart="(event: DragEvent) => onDragStart(event, cityIndex)" @drop.stop="(event: DragEvent) => onDrop(event, cityIndex)">
     <button class="burgerBtn">
         <IconBurger />
     </button>
@@ -32,10 +35,11 @@ const {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+    pointer-events: none;
 
     &:last-child {
-        margin-bottom: 0;
+        padding-bottom: 0;
     }
 
     @media (max-width: 200px) {
@@ -51,6 +55,7 @@ const {
     height: 15px;
     width: 15px;
     color: #777777;
+    pointer-events: fill;
 
     @media (max-width: 200px) {
         & {
@@ -83,6 +88,7 @@ const {
     height: 20px;
     width: 20px;
     color: #777777;
+    pointer-events: fill;
 
     @media (max-width: 200px) {
         & {
