@@ -40,7 +40,6 @@ const {
 
 <style scoped lang="scss">
 .citiesList {
-    padding-bottom: 1.25rem;
     flex-grow: 1;
     overflow: auto;
 }

@@ -32,6 +32,7 @@ const submit = (): void => {
 <style scoped lang="scss">
 .form {
     margin-top: auto;
+    padding-top: 1.25rem;
 }
 
 .label {
