@@ -4,6 +4,7 @@ import TheWeatherInfo from './TheWeatherInfo.vue';
 import TheWeatherSettings from './TheWeatherSettings.vue';
 import BaseLoader from './BaseLoader.vue';
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
+import { useWeatherInfoStore } from '@/store/weatherInfo';
 import { storeToRefs } from 'pinia';
 
 const weatherSettingsStore = useWeatherSettingsStore();
@@ -18,6 +19,10 @@ const {
     loading, 
 } = storeToRefs(weatherSettingsStore);
 
+const {
+    openedCityIndex,
+} = useWeatherInfoStore();
+
 const isShowSettings: Ref<boolean> = ref(JSON.parse(localStorage.getItem('isShowSettings') || 'false'));
 
 const toggleIsShowSettings = ():void => {
@@ -26,8 +31,8 @@ const toggleIsShowSettings = ():void => {
     localStorage.setItem('isShowSettings', JSON.stringify(isShowSettings.value));
 };
 
-if (citiesWeatherList.value.length && citiesWeatherList.value[0].name) {
-    getWeather(citiesWeatherList.value[0].name);
+if (citiesWeatherList.value.length) {
+    getWeather(citiesWeatherList.value[openedCityIndex].name);
 } else {
     getCoordsByUserLocation();
 }

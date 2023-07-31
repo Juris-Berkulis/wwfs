@@ -22,7 +22,7 @@ import TheWeather from '@/components/TheWeather.vue';
 
   @media (max-width: 100px) {
     & {
-      padding: 10px 5px;
+      padding: 15px 5px;
     }
   }
 }

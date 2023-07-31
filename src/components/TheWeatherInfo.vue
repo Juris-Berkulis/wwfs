@@ -88,30 +88,29 @@ const getVisibility = (visibility: number): string => {
     </div>
     <div class="description">
         <span 
-            v-if="weatherData?.main?.temp"
-        >Ощущается: {{ (weatherData?.main?.feels_like || weatherData?.main?.temp)?.toFixed(0) }}&#176;C.</span>
+        >Ощущается: {{ (weatherData?.main?.feels_like !== undefined ? weatherData?.main?.feels_like : weatherData?.main?.temp)?.toFixed(0) }}&#176;C.</span>
         <span 
             v-if="weatherData?.weather[0]?.description"
         >{{ setFirstLetterOfTheStringToCapital(weatherData?.weather[0]?.description) }}.</span>
     </div>
     <div class="additionally">
-        <p v-if="weatherData?.wind?.speed">
+        <p v-if="weatherData?.wind?.speed !== undefined">
             <span 
-                v-if="weatherData?.wind?.deg" 
+                v-if="weatherData?.wind?.deg !== undefined" 
                 class="arrowIcon" 
                 :style="{transform: `rotateZ(${weatherData?.wind?.deg}deg)`}"
             >&#x22;</span>
             <span>{{ weatherData?.wind?.speed.toFixed(1) }}м/с {{ getWindDirection(weatherData?.wind?.deg) }}</span>
         </p>
-        <p v-if="weatherData?.main?.pressure">
+        <p v-if="weatherData?.main?.pressure !== undefined">
             <span class="preassureIcon">
                 <span></span>
             </span>
             <span>{{ weatherData?.main?.pressure }}гПа</span>
         </p>
-        <p v-if="weatherData?.main?.humidity">Влажность: {{ weatherData?.main?.humidity }}%</p>
-        <p v-if="weatherData?.clouds?.all">Облака: {{ weatherData?.clouds?.all }}%</p>
-        <p v-if="weatherData?.visibility">Видимость: {{ getVisibility(weatherData?.visibility) }}</p>
+        <p v-if="weatherData?.main?.humidity !== undefined">Влажность: {{ weatherData?.main?.humidity }}%</p>
+        <p v-if="weatherData?.clouds?.all !== undefined">Облака: {{ weatherData?.clouds?.all }}%</p>
+        <p v-if="weatherData?.visibility !== undefined">Видимость: {{ getVisibility(weatherData?.visibility) }}</p>
     </div>
     <div class="footer">
         <button 

@@ -47,7 +47,7 @@ const {
     padding: 0.3rem 0;
     pointer-events: none;
 
-    @media (max-width: 200px) {
+    @media (max-width: 150px) {
         & {
             justify-content: space-around;
             flex-wrap: wrap;
@@ -68,6 +68,13 @@ const {
 
     @media (max-width: 200px) {
         & {
+            height: 0.8rem;
+            width: 0.8rem;
+        }
+    }
+
+    @media (max-width: 150px) {
+        & {
             order: 2;
         }
     }
@@ -84,7 +91,7 @@ const {
     white-space: nowrap;
     overflow: hidden;
 
-    @media (max-width: 200px) {
+    @media (max-width: 150px) {
         & {
             width: 100%;
             margin-left: 0;
@@ -100,6 +107,13 @@ const {
     pointer-events: fill;
 
     @media (max-width: 200px) {
+        & {
+            height: 0.8rem;
+            width: 0.8rem;
+        }
+    }
+
+    @media (max-width: 150px) {
         & {
             order: 2;
         }
