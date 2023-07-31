@@ -100,7 +100,7 @@ const getVisibility = (visibility: number): string => {
                 v-if="weatherData?.wind?.deg" 
                 class="arrowIcon" 
                 :style="{transform: `rotateZ(${weatherData?.wind?.deg}deg)`}"
-            >!</span>
+            >&#x22;</span>
             <span>{{ weatherData?.wind?.speed.toFixed(1) }}м/с {{ getWindDirection(weatherData?.wind?.deg) }}</span>
         </p>
         <p v-if="weatherData?.main?.pressure">
@@ -238,6 +238,7 @@ const getVisibility = (visibility: number): string => {
 .arrowIcon {
     display: inline-block;
     margin-right: 5px;
+    font-family: 'Eleganticons';
 }
 
 .preassureIcon {
