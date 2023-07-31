@@ -10,7 +10,10 @@ const {
 </script>
 
 <template>
-<div class="loaderWrapper" :class="{loadingWeather: loading === 'waitWeather', loadingCityName: loading === 'waitCityName'}">
+<div 
+    class="loaderWrapper" 
+    :class="{loadingWeather: loading === 'waitWeather', loadingCityName: loading === 'waitCityName'}"
+>
     <div class="loader"></div>
 </div>
 </template>

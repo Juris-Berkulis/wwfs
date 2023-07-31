@@ -58,8 +58,22 @@ const onDrop = (event: DragEvent, droppedCityIndex?: number): void => {
 </script>
 
 <template>
-<ul class="citiesList" @dragenter.prevent="" @dragover.prevent="" @drop="(event: DragEvent) => onDrop(event)">
-    <BaseCityItem v-for="cityWeatherObject, index of citiesWeatherList" :key="cityWeatherObject.id" :cityIndex="index" :cityWeatherObject="cityWeatherObject" :onDragStart="onDragStart" :onDrop="onDrop" :onDragEnd="onDragEnd" :movedCityIndex="movedCityIndex" />
+<ul 
+    class="citiesList" 
+    @dragenter.prevent=""
+    @dragover.prevent="" 
+    @drop="(event: DragEvent) => onDrop(event)"
+>
+    <BaseCityItem 
+        v-for="cityWeatherObject, index of citiesWeatherList" 
+        :key="cityWeatherObject.id" 
+        :cityIndex="index" 
+        :cityWeatherObject="cityWeatherObject" 
+        :onDragStart="onDragStart" 
+        :onDrop="onDrop" 
+        :onDragEnd="onDragEnd" 
+        :movedCityIndex="movedCityIndex" 
+    />
 </ul>
 </template>
 

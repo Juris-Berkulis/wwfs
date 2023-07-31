@@ -102,7 +102,7 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
         if (!navigator.geolocation) {
             console.error('Этот браузер не поддерживает получение данных о местоположении!');
         } else {
-            navigator.geolocation.getCurrentPosition(success, error, options); //* - Подробнее на сайте "https://developer.mozilla.org/ru/docs/Web/API/Geolocation_API/Using_the_Geolocation_API".
+            navigator.geolocation.getCurrentPosition(success, error, options);
         }
     };
 

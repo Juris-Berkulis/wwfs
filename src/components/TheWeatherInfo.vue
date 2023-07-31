@@ -69,22 +69,38 @@ const getVisibility = (visibility: number): string => {
 <template>
 <div v-if="weatherData" class="infoWrapper">
     <div class="header">
-        <p v-if="weatherData?.sys?.country" class="cityName">{{ weatherData?.name }}, {{ weatherData?.sys?.country }}</p>
+        <p 
+            v-if="weatherData?.sys?.country" 
+            class="cityName"
+        >{{ weatherData?.name }}, {{ weatherData?.sys?.country }}</p>
         <button class="settingsBtn" @click="toggleIsShowSettings">
             <IconSettings />
         </button>
     </div>
     <div class="main">
-        <img v-if="weatherData?.weather[0]?.icon" class="weatherImg" :src="`https://openweathermap.org/img/w/${weatherData?.weather[0].icon}.png`" :alt="weatherData?.weather[0].description">
+        <img 
+            v-if="weatherData?.weather[0]?.icon" 
+            class="weatherImg" 
+            :src="`https://openweathermap.org/img/w/${weatherData?.weather[0].icon}.png`" 
+            :alt="weatherData?.weather[0].description"
+        >
         <p class="weatherTemp">{{ weatherData?.main?.temp?.toFixed(0) || 'н/д' }}&#176;C</p>
     </div>
     <div class="description">
-        <span v-if="weatherData?.main?.temp">Ощущается: {{ (weatherData?.main?.feels_like || weatherData?.main?.temp)?.toFixed(0) }}&#176;C.</span>
-        <span v-if="weatherData?.weather[0]?.description">{{ setFirstLetterOfTheStringToCapital(weatherData?.weather[0]?.description) }}.</span>
+        <span 
+            v-if="weatherData?.main?.temp"
+        >Ощущается: {{ (weatherData?.main?.feels_like || weatherData?.main?.temp)?.toFixed(0) }}&#176;C.</span>
+        <span 
+            v-if="weatherData?.weather[0]?.description"
+        >{{ setFirstLetterOfTheStringToCapital(weatherData?.weather[0]?.description) }}.</span>
     </div>
     <div class="additionally">
         <p v-if="weatherData?.wind?.speed">
-            <span v-if="weatherData?.wind?.deg" class="arrowIcon" :style="{transform: `rotateZ(${weatherData?.wind?.deg}deg)`}">!</span>
+            <span 
+                v-if="weatherData?.wind?.deg" 
+                class="arrowIcon" 
+                :style="{transform: `rotateZ(${weatherData?.wind?.deg}deg)`}"
+            >!</span>
             <span>{{ weatherData?.wind?.speed.toFixed(1) }}м/с {{ getWindDirection(weatherData?.wind?.deg) }}</span>
         </p>
         <p v-if="weatherData?.main?.pressure">
@@ -98,8 +114,15 @@ const getVisibility = (visibility: number): string => {
         <p v-if="weatherData?.visibility">Видимость: {{ getVisibility(weatherData?.visibility) }}</p>
     </div>
     <div class="footer">
-        <button class="footerBtn" @click="getWeather(citiesWeatherList[openedCityIndex].name)">{{ getDateAndTime(weatherData).localHours }}:{{ getDateAndTime(weatherData).localMinutes }}</button>
-        <button v-if="citiesWeatherList.length > 1" class="footerBtn" @click="openNextCity">Следующий</button>
+        <button 
+            class="footerBtn" 
+            @click="getWeather(citiesWeatherList[openedCityIndex].name)"
+        >{{ getDateAndTime(weatherData).localHours }}:{{ getDateAndTime(weatherData).localMinutes }}</button>
+        <button 
+            v-if="citiesWeatherList.length > 1" 
+            class="footerBtn" 
+            @click="openNextCity"
+        >Следующий</button>
     </div>
 </div>
 </template>

@@ -21,7 +21,14 @@ const {
 </script>
 
 <template>
-<li class="cityItem" :class="{move: cityIndex === movedCityIndex}" draggable="true" @dragstart="(event: DragEvent) => onDragStart(event, cityIndex)" @dragend="onDragEnd" @drop.stop="(event: DragEvent) => onDrop(event, cityIndex)">
+<li 
+    class="cityItem" 
+    :class="{move: cityIndex === movedCityIndex}" 
+    draggable="true" 
+    @dragstart="(event: DragEvent) => onDragStart(event, cityIndex)" 
+    @dragend="onDragEnd" 
+    @drop.stop="(event: DragEvent) => onDrop(event, cityIndex)"
+>
     <button class="burgerBtn">
         <IconBurger />
     </button>
