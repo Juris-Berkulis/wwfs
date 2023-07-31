@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { type Ref, ref } from 'vue';
 import type { OWMCurrentWeather } from '@/types';
 import IconBurger from './IconBurger.vue';
 import IconUrn from './IconUrn.vue';
@@ -8,9 +9,7 @@ interface Props {
     cityIndex: number,
     cityWeatherObject: OWMCurrentWeather,
     onDragStart: (event: DragEvent, cityIndex: number) => void;
-    onDragEnd: () => void,
     onDrop: (event: DragEvent, cityIndex: number) => void;
-    movedCityIndex: number | null,
 };
 
 defineProps<Props>();
@@ -18,18 +17,24 @@ defineProps<Props>();
 const {
     deleteCityWeatherObjectFromList, 
 } = useRootStore();
+
+const isDraggable: Ref<boolean> = ref(false);
+
+const toggleIsDraggable = (newValue: boolean): void => {
+    isDraggable.value = newValue;
+};
 </script>
 
 <template>
 <li 
     class="cityItem" 
-    :class="{move: cityIndex === movedCityIndex}" 
-    draggable="true" 
+    :class="{move: isDraggable}" 
+    :draggable="isDraggable" 
     @dragstart="(event: DragEvent) => onDragStart(event, cityIndex)" 
-    @dragend="onDragEnd" 
+    @dragend="toggleIsDraggable(false)"
     @drop.stop="(event: DragEvent) => onDrop(event, cityIndex)"
 >
-    <button class="burgerBtn">
+    <button class="burgerBtn" @mousedown="toggleIsDraggable(true)" @dragend="toggleIsDraggable(false)">
         <IconBurger />
     </button>
     <p class="cityName">{{ cityWeatherObject.name }}, {{ cityWeatherObject.sys?.country }}</p>
@@ -45,7 +50,6 @@ const {
     justify-content: space-between;
     align-items: center;
     padding: 0.3rem 0;
-    pointer-events: none;
 
     @media (max-width: 150px) {
         & {
@@ -64,7 +68,6 @@ const {
     height: 15px;
     width: 15px;
     color: #777777;
-    pointer-events: fill;
 
     @media (max-width: 200px) {
         & {
@@ -104,7 +107,6 @@ const {
     height: 20px;
     width: 20px;
     color: #777777;
-    pointer-events: fill;
 
     @media (max-width: 200px) {
         & {

@@ -2,7 +2,6 @@ import { defineStore, storeToRefs } from 'pinia';
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
 import { useRootStore } from '@/store/root';
 import type { OWMCurrentWeather } from '@/types';
-import { ref, type Ref } from 'vue';
 
 export const useCitiesDragingStore = defineStore('citiesDraging', () => {
     const weatherSettingsStore = useWeatherSettingsStore();
@@ -20,20 +19,12 @@ export const useCitiesDragingStore = defineStore('citiesDraging', () => {
         moveOpenedCity,
     } = useRootStore();
     
-    const movedCityIndex: Ref<number | null> = ref(null);
-    
     const onDragStart = (event: DragEvent, cityIndex: number): void => {
         if (event.dataTransfer) {
             event.dataTransfer.dropEffect = 'move';
             event.dataTransfer.effectAllowed = 'move';
             event.dataTransfer.setData('cityIndex', cityIndex.toString());
         }
-    
-        movedCityIndex.value = cityIndex;
-    };
-    
-    const onDragEnd = (): void => {
-        movedCityIndex.value = null;
     };
     
     const onDrop = (event: DragEvent, droppedCityIndex?: number): void => {
@@ -56,9 +47,7 @@ export const useCitiesDragingStore = defineStore('citiesDraging', () => {
     };
 
     return {
-        movedCityIndex,
         onDragStart,
-        onDragEnd,
         onDrop,
     }
 });
