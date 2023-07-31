@@ -7,8 +7,10 @@ import { useRootStore } from '@/store/root';
 interface Props {
     cityIndex: number,
     cityWeatherObject: OWMCurrentWeather,
-    onDragStart: (event: DragEvent, cityId: number) => void;
-    onDrop: (event: DragEvent, cityId: number) => void;
+    onDragStart: (event: DragEvent, cityIndex: number) => void;
+    onDragEnd: () => void,
+    onDrop: (event: DragEvent, cityIndex: number) => void;
+    movedCityIndex: number | null,
 };
 
 defineProps<Props>();
@@ -19,7 +21,7 @@ const {
 </script>
 
 <template>
-<li class="cityItem" draggable="true" @dragstart="(event: DragEvent) => onDragStart(event, cityIndex)" @drop.stop="(event: DragEvent) => onDrop(event, cityIndex)">
+<li class="cityItem" :class="{move: cityIndex === movedCityIndex}" draggable="true" @dragstart="(event: DragEvent) => onDragStart(event, cityIndex)" @dragend="onDragEnd" @drop.stop="(event: DragEvent) => onDrop(event, cityIndex)">
     <button class="burgerBtn">
         <IconBurger />
     </button>
@@ -35,12 +37,8 @@ const {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 1.25rem;
+    padding: 0.3rem 0;
     pointer-events: none;
-
-    &:last-child {
-        padding-bottom: 0;
-    }
 
     @media (max-width: 200px) {
         & {
@@ -48,6 +46,10 @@ const {
             flex-wrap: wrap;
             gap: 0.5rem;
         }
+    }
+
+    &.move {
+        opacity: 0.5;
     }
 }
 

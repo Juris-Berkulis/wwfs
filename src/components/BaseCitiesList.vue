@@ -4,6 +4,7 @@ import BaseCityItem from './BaseCityItem.vue';
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
 import { useRootStore } from '@/store/root';
 import type { OWMCurrentWeather } from '@/types';
+import { ref, type Ref } from 'vue';
 
 const weatherSettingsStore = useWeatherSettingsStore();
 
@@ -20,19 +21,27 @@ const {
     moveOpenedCity,
 } = useRootStore();
 
-const onDragStart = (event: DragEvent, cityId: number): void => {
+const movedCityIndex: Ref<number | null> = ref(null);
+
+const onDragStart = (event: DragEvent, cityIndex: number): void => {
     if (event.dataTransfer) {
         event.dataTransfer.dropEffect = 'move';
         event.dataTransfer.effectAllowed = 'move';
-        event.dataTransfer.setData('cityId', cityId.toString());
+        event.dataTransfer.setData('cityIndex', cityIndex.toString());
     }
+
+    movedCityIndex.value = cityIndex;
+};
+
+const onDragEnd = (): void => {
+    movedCityIndex.value = null;
 };
 
 const onDrop = (event: DragEvent, droppedCityIndex?: number): void => {
     if (event.dataTransfer) {
         const cityOpenedId = getOpenCityId();
 
-        const dragedCityIndex: number = parseInt(event.dataTransfer.getData('cityId'));
+        const dragedCityIndex: number = parseInt(event.dataTransfer.getData('cityIndex'));
 
         const movedCity: OWMCurrentWeather = citiesWeatherList.value.splice(dragedCityIndex, 1)[0];
 
@@ -50,7 +59,7 @@ const onDrop = (event: DragEvent, droppedCityIndex?: number): void => {
 
 <template>
 <ul class="citiesList" @dragenter.prevent="" @dragover.prevent="" @drop="(event: DragEvent) => onDrop(event)">
-    <BaseCityItem v-for="cityWeatherObject, index of citiesWeatherList" :key="cityWeatherObject.id" :cityIndex="index" :cityWeatherObject="cityWeatherObject" :onDragStart="onDragStart" :onDrop="onDrop" />
+    <BaseCityItem v-for="cityWeatherObject, index of citiesWeatherList" :key="cityWeatherObject.id" :cityIndex="index" :cityWeatherObject="cityWeatherObject" :onDragStart="onDragStart" :onDrop="onDrop" :onDragEnd="onDragEnd" :movedCityIndex="movedCityIndex" />
 </ul>
 </template>
 
