@@ -3,16 +3,20 @@ import { type Ref, ref } from 'vue';
 import type { OWMCurrentWeather } from '@/types';
 import IconBurger from './IconBurger.vue';
 import IconUrn from './IconUrn.vue';
+import { useCitiesDragingStore } from '@/store/citiesDraging';
 import { useRootStore } from '@/store/root';
 
 interface Props {
     cityIndex: number,
     cityWeatherObject: OWMCurrentWeather,
-    onDragStart: (event: DragEvent, cityIndex: number) => void;
-    onDrop: (event: DragEvent, cityIndex: number) => void;
 };
 
 defineProps<Props>();
+
+const {
+    onDragStart,
+    onDrop,
+} = useCitiesDragingStore();
 
 const {
     deleteCityWeatherObjectFromList, 

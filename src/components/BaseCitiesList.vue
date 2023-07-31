@@ -5,7 +5,6 @@ import { useWeatherSettingsStore } from '@/store/weatherSettings';
 import { useCitiesDragingStore } from '@/store/citiesDraging';
 
 const {
-    onDragStart,
     onDrop,
 } = useCitiesDragingStore();
 
@@ -28,8 +27,6 @@ const {
         :key="cityWeatherObject.id" 
         :cityIndex="index" 
         :cityWeatherObject="cityWeatherObject" 
-        :onDragStart="onDragStart" 
-        :onDrop="onDrop" 
     />
 </ul>
 </template>
