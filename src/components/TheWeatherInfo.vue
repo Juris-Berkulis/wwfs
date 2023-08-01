@@ -219,8 +219,7 @@ const getVisibility = (visibility: number): string => {
         display: flex;
         align-items: center;
         width: calc(50% - 5px);
-        text-align: center;
-        white-space: nowrap;
+        min-width: 80px;
 
         @media (max-width: 200px) {
             & {

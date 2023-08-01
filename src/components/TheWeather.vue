@@ -49,5 +49,6 @@ if (citiesWeatherList.value.length) {
 <style scoped lang="scss">
 .informer {
     height: 100%;
+    overflow: auto;
 }
 </style>
