@@ -8,6 +8,8 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
+    "deploy_to_surge": "surge --project ./dist --domain https://forecast-widget.surge.sh/ && surge list",
+    "deploy": "npm run build && npm run deploy_to_surge",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/"
   },
