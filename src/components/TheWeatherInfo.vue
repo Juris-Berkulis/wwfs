@@ -7,6 +7,7 @@ import { useRootStore } from '@/store/root';
 import type { OWMCurrentWeather } from '@/types';
 import { setFirstLetterOfTheStringToCapital, getDateAndTime } from '@/helpers/index';
 import { storeToRefs } from 'pinia';
+import IconArrow from './IconArrow.vue';
 
 interface Props {
     toggleIsShowSettings: () => void,
@@ -95,9 +96,10 @@ const getVisibility = (visibility: number): string => {
         <p v-if="weatherData?.wind?.speed !== undefined">
             <span 
                 v-if="weatherData?.wind?.deg !== undefined" 
-                class="arrowIcon" 
-                :style="{transform: `rotateZ(${weatherData?.wind?.deg}deg)`}"
-            >&#x22;</span>
+                class="arrowWrapper" 
+            >
+                <IconArrow :rotateDeg="weatherData?.wind?.deg"/>
+            </span>
             <span>{{ weatherData?.wind?.speed.toFixed(1) }}м/с {{ getWindDirection(weatherData?.wind?.deg) }}</span>
         </p>
         <p v-if="weatherData?.main?.pressure !== undefined">
@@ -232,10 +234,11 @@ const getVisibility = (visibility: number): string => {
     }
 }
 
-.arrowIcon {
-    display: inline-block;
+.arrowWrapper {
+    height: 0.7rem;
+    width: 0.7rem;
     margin-right: 5px;
-    font-family: 'Eleganticons';
+    color: #555555;
 }
 
 .preassureIcon {

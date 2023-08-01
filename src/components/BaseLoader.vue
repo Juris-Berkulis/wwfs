@@ -25,7 +25,7 @@ const {
     align-items: center;
 
     &.loadingWeather {
-        color: #ff0000;
+        color: #ffff00;
     }
 
     &.loadingCityName {
