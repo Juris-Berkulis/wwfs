@@ -8,11 +8,9 @@ const {
     onDrop,
 } = useCitiesDragingStore();
 
-const weatherSettingsStore = useWeatherSettingsStore();
-
 const {
     citiesWeatherList, 
-} = storeToRefs(weatherSettingsStore);
+} = storeToRefs(useWeatherSettingsStore());
 </script>
 
 <template>

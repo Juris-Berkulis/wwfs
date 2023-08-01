@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, type ComputedRef, type Ref } from 'vue';
+import { computed, type ComputedRef } from 'vue';
 import IconSettings from './IconSettings.vue';
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
 import { useWeatherInfoStore } from '@/store/weatherInfo';
@@ -18,17 +18,15 @@ const weatherSettingsStore = useWeatherSettingsStore();
 
 const {
     getWeather, 
-} = useWeatherSettingsStore();
+} = weatherSettingsStore;
 
 const {
     citiesWeatherList,
 } = storeToRefs(weatherSettingsStore);
 
-const weatherInfoStore = useWeatherInfoStore();
-
 const {
     openedCityIndex,
-} = storeToRefs(weatherInfoStore);
+} = storeToRefs(useWeatherInfoStore());
 
 const {
     openNextCity,

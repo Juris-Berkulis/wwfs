@@ -2,11 +2,9 @@
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
 import { storeToRefs } from 'pinia';
 
-const weatherSettingsStore = useWeatherSettingsStore();
-
 const {
     loading,
-} = storeToRefs(weatherSettingsStore);
+} = storeToRefs(useWeatherSettingsStore());
 </script>
 
 <template>

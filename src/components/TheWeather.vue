@@ -12,7 +12,7 @@ const weatherSettingsStore = useWeatherSettingsStore();
 const {
     getCoordsByUserLocation,
     getWeather, 
-} = useWeatherSettingsStore();
+} = weatherSettingsStore;
 
 const {
     citiesWeatherList, 
