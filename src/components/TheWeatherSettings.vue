@@ -36,11 +36,11 @@ const {
 
 .header {
     position: relative;
-    min-height: 1.4rem;
+    min-height: 1.4em;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.25em;
     overflow: hidden;
 }
 
@@ -48,15 +48,15 @@ const {
     position: absolute;
     top: 0;
     left: 0;
-    width: calc(100% - 1.5rem);
-    font-size: 1rem;
-    line-height: 1.4rem;;
+    width: calc(100% - 1.5em);
+    font-size: 1em;
+    line-height: 1.4em;;
     font-weight: 700;
 }
 
 .crossBtn {
-    height: 1.25rem;
-    width: 1.25rem;
+    height: 1.25em;
+    width: 1.25em;
     color: #000000;
 }
 
@@ -67,6 +67,6 @@ base-cities-list-element {
 
 base-form-element {
     margin-top: auto;
-    padding-top: 1.25rem;
+    padding-top: 1.25em;
 }
 </style>

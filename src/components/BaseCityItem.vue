@@ -53,13 +53,13 @@ const toggleIsDraggable = (newValue: boolean): void => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.3rem 0;
+    padding: 0.3em 0;
 
     @media (max-width: 150px) {
         & {
             justify-content: space-around;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.5em;
         }
     }
 
@@ -75,8 +75,8 @@ const toggleIsDraggable = (newValue: boolean): void => {
 
     @media (max-width: 200px) {
         & {
-            height: 0.8rem;
-            width: 0.8rem;
+            height: 0.8em;
+            width: 0.8em;
         }
     }
 
@@ -94,7 +94,9 @@ const toggleIsDraggable = (newValue: boolean): void => {
 .cityName {
     margin-right: auto;
     margin-left: 10px;
-    font-size: 0.8rem;
+    font-size: 0.8em;
+    font-weight: 400;
+    line-height: 1;
     white-space: nowrap;
     overflow: hidden;
 
@@ -114,8 +116,8 @@ const toggleIsDraggable = (newValue: boolean): void => {
 
     @media (max-width: 200px) {
         & {
-            height: 0.8rem;
-            width: 0.8rem;
+            height: 0.8em;
+            width: 0.8em;
         }
     }
 

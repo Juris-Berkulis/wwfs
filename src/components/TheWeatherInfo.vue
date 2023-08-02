@@ -135,11 +135,11 @@ const getVisibility = (visibility: number): string => {
 
 .header {
     position: relative;
-    min-height: 1.4rem;
+    min-height: 1.4em;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.25em;
     overflow: hidden;
 
     &:not(:has(.cityName)) {
@@ -151,23 +151,23 @@ const getVisibility = (visibility: number): string => {
     position: absolute;
     top: 0;
     left: 0;
-    width: calc(100% - 1.5rem);
-    font-size: 1rem;
-    line-height: 1.4rem;
+    width: calc(100% - 1.5em);
+    font-size: 1em;
+    line-height: 1.4em;
     font-weight: 700;
     white-space: nowrap;
     overflow: hidden;
 
     @media (max-width: 200px) {
         & {
-            font-size: 0.8rem;
+            font-size: 0.8em;
         }
     }
 }
 
 .settingsBtn {
-    height: 1.25rem;
-    width: 1.25rem;
+    height: 1.25em;
+    width: 1.25em;
 }
 
 .main {
@@ -175,7 +175,7 @@ const getVisibility = (visibility: number): string => {
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.25em;
 }
 
 .weatherImg {
@@ -184,18 +184,20 @@ const getVisibility = (visibility: number): string => {
 }
 
 .weatherTemp {
-    font-size: 2rem;
+    font-size: 2em;
     font-weight: 700;
 
     @media (max-width: 150px) {
-    font-size: 1.2rem;
+    font-size: 1.2em;
     }
 }
 
 .description {
-    height: 2rem;
-    margin-bottom: 1.25rem;
-    font-size: 0.7rem;
+    height: 2em;
+    margin-bottom: 1.25em;
+    font-size: 0.7em;
+    font-weight: 400;
+    line-height: 1.15;
     overflow: auto;
 
     & span {
@@ -210,9 +212,11 @@ const getVisibility = (visibility: number): string => {
 .additionally {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.6rem 10px;
-    margin-bottom: 0.6rem;
-    font-size: 0.7rem;
+    gap: 0.6em 10px;
+    margin-bottom: 0.6em;
+    font-size: 0.7em;
+    font-weight: 400;
+    line-height: 1.15;
     overflow: auto;
 
     & p {
@@ -234,8 +238,8 @@ const getVisibility = (visibility: number): string => {
 }
 
 .arrowWrapper {
-    height: 0.7rem;
-    width: 0.7rem;
+    height: 0.7em;
+    width: 0.7em;
     margin-right: 5px;
     color: #555555;
 }
@@ -243,8 +247,8 @@ const getVisibility = (visibility: number): string => {
 .preassureIcon {
     position: relative;
     margin-right: 5px;
-    height: 0.7rem;
-    width: 0.7rem;
+    height: 0.7em;
+    width: 0.7em;
     border-radius: 50%;
     border: 1px solid #000000;
 
@@ -269,7 +273,9 @@ const getVisibility = (visibility: number): string => {
 }
 
 .footerBtn {
-    font-size: 0.8rem;
+    font-size: 0.8em;
+    font-weight: 400;
+    line-height: 1;
     color: #555555;
     transition: all 0.4s linear 0s;
 }

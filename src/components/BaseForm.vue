@@ -37,8 +37,10 @@ const submit = (): void => {
 
 .label {
     display: block;
-    margin-bottom: 0.6rem;
-    font-size: 0.8rem;
+    margin-bottom: 0.6em;
+    font-size: 0.8em;
+    font-weight: 400;
+    line-height: 1.15;
 }
 
 .inputWrapper {
@@ -56,7 +58,9 @@ const submit = (): void => {
 .input {
     width: 100%;
     padding: 5px;
-    font-size: 1rem;
+    font-size: 1em;
+    font-weight: 400;
+    line-height: 1;
     margin-right: 5px;
 }
 
