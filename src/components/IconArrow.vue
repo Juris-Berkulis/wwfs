@@ -1,13 +1,19 @@
 <script setup lang="ts">
+import { computed, type ComputedRef } from 'vue';
+
 interface Props {
     rotateDeg: number,
 };
 
-defineProps<Props>();
+const props = defineProps<Props>();
+
+const rotateArrow: ComputedRef<string> = computed(() => {
+    return `rotateZ(${props.rotateDeg}deg)`
+})
 </script>
 
 <template>
-<div class="arrow" :style="{transform: `rotateZ(${rotateDeg}deg)`}">
+<div class="arrow">
     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         width="100%" height="100%" viewBox="0 0 493.356 493.355"
         xml:space="preserve">
@@ -25,6 +31,7 @@ defineProps<Props>();
 .arrow {
     height: 100%;
     width: 100%;
+    transform: v-bind(rotateArrow);
 
     & svg {
         fill: currentColor;
