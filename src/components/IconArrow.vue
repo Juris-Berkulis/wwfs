@@ -28,6 +28,8 @@ const rotateArrow: ComputedRef<string> = computed(() => {
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/styles/main.scss';
+
 .arrow {
     height: 100%;
     width: 100%;

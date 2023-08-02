@@ -10,6 +10,8 @@
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/styles/main.scss';
+
 .enter {
     position: relative;
     height: 100%;
@@ -32,7 +34,7 @@
     transition: all 0.2s ease-in-out 0s;
 }
 
-button:hover .arrowStart {
+.enter:hover .arrowStart {
     width: 20px;
 }
 

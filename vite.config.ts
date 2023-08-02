@@ -10,7 +10,14 @@ export default defineConfig({
     port: 8020,
   },
   plugins: [
-    vue(),
+    vue({
+      customElement: true,
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.includes('-')
+        }
+      },
+    }),
     vueJsx(),
   ],
   resolve: {

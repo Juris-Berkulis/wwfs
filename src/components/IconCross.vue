@@ -9,6 +9,8 @@
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/styles/main.scss';
+
 .cross {
     position: relative;
     height: 100%;
@@ -29,7 +31,7 @@
     transform: translate(-50%, -50%) rotateZ(45deg);
 }
 
-button:hover .crossLine_1 {
+.cross:hover .crossLine_1 {
     transform: translate(-50%, -50%) rotateZ(-45deg);
 }
 
@@ -37,7 +39,7 @@ button:hover .crossLine_1 {
     transform: translate(-50%, -50%) rotateZ(-45deg);
 }
 
-button:hover .crossLine_2 {
+.cross:hover .crossLine_2 {
     transform: translate(-50%, -50%) rotateZ(45deg);
 }
 </style>

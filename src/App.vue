@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import TheWeather from '@/components/TheWeather.vue';
 </script>
 
 <template>
 <div class="wrapper">
-  <TheWeather />
+  <the-weather />
 </div>
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/styles/main.scss';
+
 .wrapper {
   height: 100%;
   max-height: 300px;
@@ -25,5 +26,10 @@ import TheWeather from '@/components/TheWeather.vue';
       padding: 15px 5px;
     }
   }
+}
+
+the-weather {
+  height: 100%;
+  overflow: auto;
 }
 </style>

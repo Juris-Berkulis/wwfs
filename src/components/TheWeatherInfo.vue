@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { computed, type ComputedRef } from 'vue';
-import IconSettings from './IconSettings.vue';
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
 import { useWeatherInfoStore } from '@/store/weatherInfo';
 import { useRootStore } from '@/store/root';
 import type { OWMCurrentWeather } from '@/types';
 import { setFirstLetterOfTheStringToCapital, getDateAndTime } from '@/helpers/index';
 import { storeToRefs } from 'pinia';
-import IconArrow from './IconArrow.vue';
 
 interface Props {
     toggleIsShowSettings: () => void,
@@ -73,7 +71,7 @@ const getVisibility = (visibility: number): string => {
             class="cityName"
         >{{ weatherData?.name }}, {{ weatherData?.sys?.country }}</p>
         <button class="settingsBtn" @click="toggleIsShowSettings">
-            <IconSettings />
+            <icon-settings-element />
         </button>
     </div>
     <div class="main">
@@ -98,7 +96,7 @@ const getVisibility = (visibility: number): string => {
                 v-if="weatherData?.wind?.deg !== undefined" 
                 class="arrowWrapper" 
             >
-                <IconArrow :rotateDeg="weatherData?.wind?.deg"/>
+                <icon-arrow-element :rotateDeg="weatherData?.wind?.deg"/>
             </span>
             <span>{{ weatherData?.wind?.speed.toFixed(1) }}м/с {{ getWindDirection(weatherData?.wind?.deg) }}</span>
         </p>
@@ -127,6 +125,8 @@ const getVisibility = (visibility: number): string => {
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/styles/main.scss';
+
 .infoWrapper {
     height: 100%;
     display: flex;

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, type Ref} from 'vue';
-import IconEnter from './IconEnter.vue';
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
 
 const {
@@ -23,16 +22,17 @@ const submit = (): void => {
     <div class="inputWrapper">
         <input v-model="cityNameInInput" class="input" type="text" id="cityInput" placeholder="Город">
         <button class="enterBtn" type="submit">
-            <IconEnter />
+            <icon-enter-element />
         </button>
     </div>
 </form>
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/styles/main.scss';
+
 .form {
-    margin-top: auto;
-    padding-top: 1.25rem;
+    height: 100%;
 }
 
 .label {

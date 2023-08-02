@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import IconCross from './IconCross.vue';
-import BaseCitiesList from './BaseCitiesList.vue';
-import BaseForm from './BaseForm.vue';
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
 
 interface Props {
@@ -20,15 +17,17 @@ const {
     <div class="header">
         <p class="headerText">Настройки</p>
         <button v-if="citiesWeatherList.length" class="crossBtn" @click="toggleIsShowSettings">
-            <IconCross />
+            <icon-cross-element />
         </button>
     </div>
-    <BaseCitiesList />
-    <BaseForm />
+    <base-cities-list-element />
+    <base-form-element />
 </div>
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/styles/main.scss';
+
 .settingsWrapper {
     height: 100%;
     display: flex;
@@ -59,5 +58,15 @@ const {
     height: 1.25rem;
     width: 1.25rem;
     color: #000000;
+}
+
+base-cities-list-element {
+    flex-grow: 1;
+    overflow: auto;
+}
+
+base-form-element {
+    margin-top: auto;
+    padding-top: 1.25rem;
 }
 </style>

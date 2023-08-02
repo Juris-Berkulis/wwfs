@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { type Ref, ref } from 'vue';
 import type { OWMCurrentWeather } from '@/types';
-import IconBurger from './IconBurger.vue';
-import IconUrn from './IconUrn.vue';
 import { useCitiesDragingStore } from '@/store/citiesDraging';
 import { useRootStore } from '@/store/root';
 
@@ -39,16 +37,18 @@ const toggleIsDraggable = (newValue: boolean): void => {
     @drop.stop="(event: DragEvent) => onDrop(event, cityIndex)"
 >
     <button class="burgerBtn" @mousedown="toggleIsDraggable(true)" @dragend="toggleIsDraggable(false)">
-        <IconBurger />
+        <icon-burger-element />
     </button>
     <p class="cityName">{{ cityWeatherObject.name }}, {{ cityWeatherObject.sys?.country }}</p>
     <button class="urnBtn" @click="deleteCityWeatherObjectFromList(cityWeatherObject.id)">
-        <IconUrn />
+        <icon-urn-element />
     </button>
 </li>
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/styles/main.scss';
+
 .cityItem {
     display: flex;
     justify-content: space-between;

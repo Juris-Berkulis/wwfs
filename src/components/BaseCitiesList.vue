@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import BaseCityItem from './BaseCityItem.vue';
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
 import { useCitiesDragingStore } from '@/store/citiesDraging';
 
@@ -20,7 +19,7 @@ const {
     @dragover.prevent="" 
     @drop="(event: DragEvent) => onDrop(event)"
 >
-    <BaseCityItem 
+    <base-city-item-element 
         v-for="cityWeatherObject, index of citiesWeatherList" 
         :key="cityWeatherObject.id" 
         :cityIndex="index" 
@@ -30,8 +29,9 @@ const {
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/styles/main.scss';
+
 .citiesList {
-    flex-grow: 1;
-    overflow: auto;
+    height: 100%;
 }
 </style>

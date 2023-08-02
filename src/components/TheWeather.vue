@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
-import TheWeatherInfo from './TheWeatherInfo.vue';
-import TheWeatherSettings from './TheWeatherSettings.vue';
-import BaseLoader from './BaseLoader.vue';
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
 import { useWeatherInfoStore } from '@/store/weatherInfo';
 import { storeToRefs } from 'pinia';
@@ -40,13 +37,15 @@ if (citiesWeatherList.value.length) {
 
 <template>
 <div v-if="loading === null" class="informer">
-    <TheWeatherSettings v-if="isShowSettings" :toggleIsShowSettings="toggleIsShowSettings" />
-    <TheWeatherInfo v-else :toggleIsShowSettings="toggleIsShowSettings" />
+    <the-weather-settings v-if="isShowSettings" :toggleIsShowSettings="toggleIsShowSettings" />
+    <the-weather-info v-else :toggleIsShowSettings="toggleIsShowSettings" />
 </div>
-<BaseLoader v-else />
+<base-loader-element v-else />
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/styles/main.scss';
+
 .informer {
     height: 100%;
     overflow: auto;
