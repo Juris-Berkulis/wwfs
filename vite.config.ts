@@ -9,6 +9,13 @@ export default defineConfig({
   server: {
     port: 8020,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/[name].js',
+      },
+    },
+  },
   plugins: [
     vue({
       customElement: true,
