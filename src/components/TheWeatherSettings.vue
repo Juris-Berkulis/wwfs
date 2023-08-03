@@ -2,7 +2,7 @@
 import { useWeatherSettingsStore } from '@/store/weatherSettings';
 
 interface Props {
-    toggleIsShowSettings: () => void,
+    toggleIsShowSettings: (isShow?: boolean) => void,
 };
 
 defineProps<Props>();
@@ -16,7 +16,7 @@ const {
 <div class="settingsWrapper">
     <div class="header">
         <p class="headerText">Настройки</p>
-        <button v-if="citiesWeatherList.length" class="crossBtn" @click="toggleIsShowSettings">
+        <button v-if="citiesWeatherList.length" class="crossBtn" @click="() => toggleIsShowSettings()">
             <icon-cross-element />
         </button>
     </div>

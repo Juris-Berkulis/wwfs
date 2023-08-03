@@ -9,6 +9,17 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
     const language: string = 'ru';
     const citiesWeatherList: OWMCurrentWeather[] = reactive(JSON.parse(localStorage.getItem('citiesWeatherList') || '[]'));
     const loading: Ref<Loading> = ref(null);
+    const isShowSettings: Ref<boolean> = ref(JSON.parse(localStorage.getItem('isShowSettings') || 'false'));
+
+    const toggleIsShowSettings = (isShow?: boolean): void => {
+        if (isShow === undefined) {
+            isShowSettings.value = !isShowSettings.value
+        } else {
+            isShowSettings.value = isShow;
+        }
+
+        localStorage.setItem('isShowSettings', JSON.stringify(isShowSettings.value));
+    };
 
     const saveCitiesWeatherListIntoLocalStorage = (): void => {
         localStorage.setItem('citiesWeatherList', JSON.stringify(citiesWeatherList));
@@ -91,6 +102,7 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
     
         const error = (error: GeolocationPositionError) => {
             console.error(`Ошибка получения данных о местоположении!\n${error.code}: ${error.message}`);
+            toggleIsShowSettings(true);
         };
     
         const options = {
@@ -101,12 +113,15 @@ export const useWeatherSettingsStore = defineStore('weatherSettings', () => {
     
         if (!navigator.geolocation) {
             console.error('Этот браузер не поддерживает получение данных о местоположении!');
+            toggleIsShowSettings(true);
         } else {
             navigator.geolocation.getCurrentPosition(success, error, options);
         }
     };
 
     return {
+        isShowSettings, 
+        toggleIsShowSettings, 
         citiesWeatherList, 
         saveCitiesWeatherListIntoLocalStorage,
         getWeather, 

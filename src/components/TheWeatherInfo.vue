@@ -8,7 +8,7 @@ import { setFirstLetterOfTheStringToCapital, getDateAndTime } from '@/helpers/in
 import { storeToRefs } from 'pinia';
 
 interface Props {
-    toggleIsShowSettings: () => void,
+    toggleIsShowSettings: (isShow?: boolean) => void,
 };
 
 defineProps<Props>();
@@ -70,7 +70,7 @@ const getVisibility = (visibility: number): string => {
             v-if="weatherData?.sys?.country" 
             class="cityName"
         >{{ weatherData?.name }}, {{ weatherData?.sys?.country }}</p>
-        <button class="settingsBtn" @click="toggleIsShowSettings">
+        <button class="settingsBtn" @click="() => toggleIsShowSettings()">
             <icon-settings-element />
         </button>
     </div>
