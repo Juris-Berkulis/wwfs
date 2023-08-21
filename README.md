@@ -7,8 +7,8 @@ View **[the demo](https://forecast-widget.surge.sh/)** of the widget.
 To embed this widget on your site, simply place this code in your site's html-markup:
 
 ```sh
-<weather-widget></weather-widget>
-<script async src="https://forecast-widget.surge.sh/assets/index.js"></script>
+    <weather-widget />
+    <script async src="https://forecast-widget.surge.sh"></script>
 ```
 
 **Recommended sizes** for the container you will embed the widget in:

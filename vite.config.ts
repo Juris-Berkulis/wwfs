@@ -12,7 +12,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        entryFileNames: 'assets/[name].js',
+        entryFileNames: '[name].js',
       },
     },
   },
